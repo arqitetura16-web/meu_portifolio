@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Carla Fanton | Arquitetura e Interiores</title>
+  <meta name="description" content="Carla Fanton Arquitetura e Interiores. Projetos residenciais, empresariais, design de interiores e reformas com estética limpa, funcional e atemporal.">
+  
+  <!-- Google Fonts: Montserrat (Ultra-thin & Light) + Crimson Pro (Sophisticated Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#676e49',
+              dark: '#4f5537',
+              darker: '#3a3f28',
+              light: '#838b5e',
+              soft: '#e9ece0',
+              cream: '#f2f4eb'
+            },
+            arch: {
+              maskBg: '#eaece4',
+              maskDark: '#e2e5dc',
+              maskLight: '#f4f5ef',
+              card: '#ffffff',
+              border: '#d4d8c8',
+              borderDark: '#bcbfb0'
+            },
+            textMain: '#1c2018',
+            textMuted: '#4b5143',
+            textLight: '#787e6f'
+          },
+          fontFamily: {
+            sans: ['"Montserrat"', 'sans-serif'],
+            serif: ['"Crimson Pro"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React & ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel CDN for inline JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #eaece4; /* Warm Gray Architectural Mask */
+      color: #1c2018;
+      overflow-x: hidden;
+      font-weight: 300;
+    }
+    
+    h1, h2, h3, .font-serif-title {
+      font-family: 'Crimson Pro', serif;
+      letter-spacing: 0.02em;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eaece4;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #676e49;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4f5537;
+    }
+
+    /* Green Top Header Bar */
+    .green-header {
+      background: #676e49;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(103, 110, 73, 0.18);
+    }
+
+    /* Soft Architectural Mask Card */
+    .mask-card {
+      background: #ffffff;
+      border: 1px solid #d4d8c8;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.04);
+      transition: all 0.4s ease;
+    }
+    
+    .mask-card:hover {
+      border-color: #676e49;
+      box-shadow: 0 12px 40px rgba(103, 110, 73, 0.15);
+    }
+
+    /* Justified text formatting */
+    .text-justified {
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
+    }
+
+    .image-zoom-container {
+      overflow: hidden;
+    }
+    .image-zoom-container img {
+      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .image-zoom-container:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Fluid Text Shadows for Hero Contrast */
+    .hero-text-shadow {
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.9);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-arch-maskBg text-textMain antialiased selection:bg-brand selection:text-white">
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Direct project data with exact local paths
+    const PROJECTS = [
+      {
+        id: 'tea',
+        title: 'Apto TEA',
+        subtitle: 'Apartamento de 60m²',
+        category: 'Residencial',
+        coverImage: 'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE ESTAR.png',
+        description: 'O equilíbrio perfeito entre a vanguarda industrial e a sofisticação contemporânea. Projetado para refletir o dinamismo de um jovem casal, este apartamento de 60m² traduz a estética industrial de forma repensada e elegante. Em vez da crueza tradicional do estilo, o projeto adota uma abordagem refinada, onde elementos arrojados recebem um toque inegável de modernidade. O resultado é um lar que abraça a funcionalidade necessária para o ritmo da vida adulta, mantendo uma atmosfera cosmopolita, acolhedora e de alto padrão visual.',
+        images: [
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE ESTAR.png',
+          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-SALA DE ESTAR 03.png',
+          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-SALA DE JANTAR E COZINHA.png',
+          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-SALA-JANTAR E ESTAR.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE JANTAR.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 01.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 02.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 03.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 4.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 0.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 01.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 02.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 04.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 1.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 01.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 02.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 03.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 04.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 1.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-BANHEIRO 02.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-BANHEIRO 03.png',
+          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-BANHEIRO 1.png',
+          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-CORREDOR.png'
+        ]
+      },
+      {
+        id: 'cel',
+        title: 'Cozinha CEL',
+        subtitle: 'Design Compacto de Alto Padrão',
+        category: 'Interiores / Cozinha',
+        coverImage: 'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 01.png',
+        description: 'Ousadia e otimização em um design inteligente e arrojado. A Cozinha L&C é um verdadeiro exercício de precisão e estilo em espaços compactos. Para maximizar a área de circulação e convivência, a solução adotada foi a integração de um canto alemão, complementado por um layout em \'U\' que abraça o fogão e a lava-louças com total fluidez. A paleta de cores foge do óbvio ao apostar em uma atmosfera mais escura e marcante. O protagonismo do granito Via Láctea, que inicialmente poderia soar como um desafio para um ambiente menor, provou ser a escolha exata: a pedra cria um contraste sofisticado, harmonizando perfeitamente com os tons claros do projeto e o piso cinza preexistente, garantindo um extremo conforto visual.',
+        images: [
+          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 01.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 02.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 03.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 04.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 05.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 06.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 07.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇÃO 3 - 5.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3 - 3.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3 - 4.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3 -1.png',
+          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3.png'
+        ]
+      },
+      {
+        id: 'rem',
+        title: 'Residência REM',
+        subtitle: 'Edícula Praiana & Refúgio de Design',
+        category: 'Arquitetura Residencial',
+        coverImage: 'PROJETOS/REM/Enscape_2025-08-28-15-09-43_00-FACHADA.png',
+        description: 'Minimalismo rústico e atmosfera intimista em uma releitura praiana. Pensada para ser o refúgio perfeito de um casal e sua filha, a Residência M&R eleva o conceito de edícula praiana a um novo patamar de design. A arquitetura de linhas retas, destacada pelo uso da platibanda e detalhes em alumínio, confere à casa uma fachada de visual enxuto, moderno e profundamente intimista. Na área externa, o diálogo entre a piscina e o espaço gourmet é ditado pela escolha criteriosa de revestimentos amadeirados e em tons de cinza. Essa composição cria uma dualidade encantadora, unindo a limpeza do design minimalista ao aconchego tátil do estilo rústico, resultando em um cenário ideal para criar memórias em família.',
+        images: [
+          'PROJETOS/REM/Enscape_2025-08-28-15-09-43_00-FACHADA.png',
+          'PROJETOS/REM/Enscape_2025-08-28-15-09-43_00-EXTERNO.png',
+          'PROJETOS/REM/Enscape_2025-09-28-13-34-15_ÁREA GOURMET RENDER.png',
+          'PROJETOS/REM/Enscape_2025-09-28-13-34-15_ÁREA GOURMET RENDER 2.png',
+          'PROJETOS/REM/Enscape_2025-09-28-13-34-15_ÁREA GOURMET RENDER 3.png',
+          'PROJETOS/REM/Enscape_2025-09-28-12-51-34_Enscape cena 1.png',
+          'PROJETOS/REM/Enscape_2026-01-10-11-24-34_03-frente quarto.png',
+          'PROJETOS/REM/Enscape_2026-01-10-11-24-34_03-fundo.png',
+          'PROJETOS/REM/Enscape_2025-11-29-16-27-58_QUARTO 2 (5).png',
+          'PROJETOS/REM/SUITE.png'
+        ]
+      }
+    ];
+
+    // Real Office Photos Array from FOTOS DO ESCRITORIO
+    const OFFICE_PHOTOS = [
+      {
+        url: 'FOTOS DO ESCRITORIO/fachada.jfif',
+        title: 'Fachada do Escritório',
+        description: 'Design de linhas limpas e acolhedoras para receber nossos clientes.'
+      },
+      {
+        url: 'FOTOS DO ESCRITORIO/entrada.png',
+        title: 'Entrada & Acolhimento',
+        description: 'O primeiro ponto de contato com nossa atmosfera inspiradora.'
+      },
+      {
+        url: 'FOTOS DO ESCRITORIO/frente atendimento.png',
+        title: 'Espaço de Atendimento',
+        description: 'Onde as conversas francas e as primeiras ideias ganham vida.'
+      },
+      {
+        url: 'FOTOS DO ESCRITORIO/janela.png',
+        title: 'Iluminação & Detalhes',
+        description: 'Ambiente pensado nos detalhes, confortável e banhado por luz natural.'
+      },
+      {
+        url: 'FOTOS DO ESCRITORIO/tv cozinha.png',
+        title: 'Espaço Integrado',
+        description: 'Integração perfeita entre ateliê de criação e área de convivência.'
+      },
+      {
+        url: 'FOTOS DO ESCRITORIO/banheiro final.png',
+        title: 'Detalhes de Acabamento',
+        description: 'A prova viva da nossa busca pela perfeição em cada revestimento.'
+      }
+    ];
+
+    const SERVICES = [
+      {
+        title: 'Arquitetura Residencial',
+        subtitle: 'Casas Feitas Sob Medida',
+        bgImage: 'assets/servico_residencial.jpg',
+        description: 'A materialização do seu lar, da fundação ao último detalhe. Projetamos casas do zero, alinhando a estética da fachada à inteligência da planta para criar um espaço feito sob medida para a sua história.'
+      },
+      {
+        title: 'Projetos Empresariais',
+        subtitle: 'Estratégia & Identidade Comercial',
+        bgImage: 'assets/servico_empresarial.jpg',
+        description: 'O espaço físico como estratégia de negócio. Desenhamos ambientes comerciais e corporativos que traduzem a identidade da sua marca, melhoram o fluxo de trabalho e criam uma conexão imediata com o seu cliente.'
+      },
+      {
+        title: 'Design de Interiores',
+        subtitle: 'Funcionalidade & Atmosfera',
+        bgImage: 'assets/servico_interiores.jpg',
+        description: 'O cuidado de olhar para dentro. Projetos focados em extrair o máximo potencial dos espaços, equilibrando escolhas de materiais, iluminação e mobiliário para criar ambientes que funcionem perfeitamente para a sua rotina.'
+      },
+      {
+        title: 'Reformas',
+        subtitle: 'A Arte de Ressignificar Espaços',
+        bgImage: 'assets/servico_reformas.jpg',
+        description: 'Desenhamos novas possibilidades para imóveis existentes, resolvendo desafios de layout e modernizando estruturas para adaptar o ambiente a uma nova fase da sua vida.'
+      }
+    ];
+
+    const STEPS = [
+      {
+        number: '01',
+        title: 'A Entrevista',
+        description: 'O ponto de partida. Uma conversa franca para entender sua rotina, necessidades e o que o ambiente ideal significa para você ou para o seu negócio.'
+      },
+      {
+        number: '02',
+        title: 'O Desenvolvimento Compartilhado',
+        description: 'Construímos o conceito juntos. Você acompanha a evolução do desenho de perto, garantindo que as suas expectativas guiem o nosso traço.'
+      },
+      {
+        number: '03',
+        title: 'O Refinamento',
+        description: 'A fase de lapidar. Ajustes finos de layout, escolha criteriosa de materiais e a aprovação das volumetrias.'
+      },
+      {
+        number: '04',
+        title: 'A Entrega',
+        description: 'O projeto completo, com todo o detalhamento técnico e executivo necessário para que a obra saia do papel exatamente como planejamos.'
+      }
+    ];
+
+    function App() {
+      const [activeSection, setActiveSection] = useState('inicio');
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      
+      const [lightboxState, setLightboxState] = useState({ isOpen: false, images: [], currentIndex: 0, title: '' });
+      const [projectSlideIndices, setProjectSlideIndices] = useState({ tea: 0, cel: 0, rem: 0 });
+      const [officeSlideIndex, setOfficeSlideIndex] = useState(0);
+
+      const [formStatus, setFormStatus] = useState(null);
+
+      // Handle keyboard navigation for Lightbox
+      useEffect(() => {
+        const handleKeyDown = (e) => {
+          if (!lightboxState.isOpen) return;
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') prevLightboxImage();
+          if (e.key === 'ArrowRight') nextLightboxImage();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+      }, [lightboxState]);
+
+      // Initialize Lucide icons on render
+      useEffect(() => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+
+      // Update active nav link on scroll
+      useEffect(() => {
+        const handleScroll = () => {
+          const sections = ['inicio', 'essencia', 'servicos', 'portfolio', 'nossa-casa', 'jornada', 'contato'];
+          const scrollPos = window.scrollY + 180;
+
+          for (const sectionId of sections) {
+            const el = document.getElementById(sectionId);
+            if (el) {
+              const top = el.offsetTop;
+              const height = el.offsetHeight;
+              if (scrollPos >= top && scrollPos < top + height) {
+                setActiveSection(sectionId);
+                break;
+              }
+            }
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      const nextProjectSlide = (projectId, totalImages) => {
+        setProjectSlideIndices(prev => ({
+          ...prev,
+          [projectId]: (prev[projectId] + 1) % totalImages
+        }));
+      };
+
+      const prevProjectSlide = (projectId, totalImages) => {
+        setProjectSlideIndices(prev => ({
+          ...prev,
+          [projectId]: (prev[projectId] - 1 + totalImages) % totalImages
+        }));
+      };
+
+      const nextOfficeSlide = () => {
+        setOfficeSlideIndex(prev => (prev + 1) % OFFICE_PHOTOS.length);
+      };
+
+      const prevOfficeSlide = () => {
+        setOfficeSlideIndex(prev => (prev - 1 + OFFICE_PHOTOS.length) % OFFICE_PHOTOS.length);
+      };
+
+      const openLightbox = (imageList, index, titleName) => {
+        setLightboxState({ isOpen: true, images: imageList, currentIndex: index, title: titleName || '' });
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeLightbox = () => {
+        setLightboxState({ isOpen: false, images: [], currentIndex: 0, title: '' });
+        document.body.style.overflow = 'auto';
+      };
+
+      const nextLightboxImage = () => {
+        setLightboxState(prev => ({
+          ...prev,
+          currentIndex: (prev.currentIndex + 1) % prev.images.length
+        }));
+      };
+
+      const prevLightboxImage = () => {
+        setLightboxState(prev => ({
+          ...prev,
+          currentIndex: (prev.currentIndex - 1 + prev.images.length) % prev.images.length
+        }));
+      };
+
+      const handleFormSubmit = (e) => {
+        setFormStatus('sending');
+        setTimeout(() => {
+          setFormStatus('success');
+        }, 1200);
+      };
+
+      return (
+        <div className="min-h-screen bg-arch-maskBg text-textMain flex flex-col justify-between">
+          
+          {/* GREEN TOP NAVIGATION HEADER BAR (RESPONSIVE WRAP-SAFE NAV) */}
+          <header className="fixed top-0 left-0 right-0 z-50 green-header text-white transition-all duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+              
+              {/* Text Only Branding on Top-Left */}
+              <a href="#inicio" className="flex items-center gap-2 group whitespace-nowrap">
+                <div className="flex flex-col">
+                  <span className="font-serif-title font-medium text-lg sm:text-xl text-white tracking-widest leading-none">CARLA FANTON</span>
+                  <span className="text-[10px] sm:text-[11px] text-brand-cream/90 tracking-widest uppercase font-light mt-1">Arquitetura e Interiores</span>
+                </div>
+              </a>
+
+              {/* Desktop Nav Links */}
+              <nav className="hidden lg:flex items-center space-x-5 xl:space-x-8">
+                {[
+                  { id: 'essencia', label: 'Nossa Essência' },
+                  { id: 'servicos', label: 'O Que Fazemos' },
+                  { id: 'portfolio', label: 'Portfólio' },
+                  { id: 'nossa-casa', label: 'Nossa Casa' },
+                  { id: 'jornada', label: 'A Jornada' },
+                  { id: 'contato', label: 'Contato' }
+                ].map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className={`text-xs font-medium tracking-widest uppercase transition-all duration-200 py-2 whitespace-nowrap relative flex items-center ${
+                      activeSection === item.id 
+                        ? 'text-white font-semibold' 
+                        : 'text-brand-cream/80 hover:text-white'
+                    }`}
+                  >
+                    {item.label}
+                    {activeSection === item.id && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full animate-fade-in" />
+                    )}
+                  </a>
+                ))}
+              </nav>
+
+              {/* WhatsApp Quick Button */}
+              <div className="hidden sm:flex items-center">
+                <a
+                  href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-brand font-semibold hover:bg-brand-cream transition-all duration-300 text-xs uppercase tracking-wider flex items-center gap-2 shadow-md hover:shadow-lg whitespace-nowrap"
+                >
+                  <svg className="w-4 h-4 fill-current text-brand" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                  </svg>
+                  <span>Falar no WhatsApp</span>
+                </a>
+              </div>
+
+              {/* Mobile Hamburger Toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-white hover:text-brand-cream rounded-lg focus:outline-none"
+                aria-label="Abrir Menu"
+              >
+                <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-6 h-6"></i>
+              </button>
+            </div>
+
+            {/* Mobile Menu Drawer */}
+            {mobileMenuOpen && (
+              <div className="lg:hidden bg-brand-dark px-6 py-6 space-y-4 animate-fade-in border-t border-white/10">
+                {[
+                  { id: 'essencia', label: 'Nossa Essência' },
+                  { id: 'servicos', label: 'O Que Fazemos' },
+                  { id: 'portfolio', label: 'Portfólio' },
+                  { id: 'nossa-casa', label: 'Nossa Casa' },
+                  { id: 'jornada', label: 'A Jornada' },
+                  { id: 'contato', label: 'Contato' }
+                ].map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block text-sm font-medium tracking-wider uppercase text-white hover:text-brand-cream"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a
+                  href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full mt-4 py-3 rounded-xl bg-white text-brand font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  Falar no WhatsApp
+                </a>
+              </div>
+            )}
+          </header>
+
+          {/* HERO SECTION: BRIGHT CRISP COVER IMAGE + SUBTLE LIGHT FADE + GIANT LOGO */}
+          <section id="inicio" className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-24 overflow-hidden border-b border-arch-border">
+            
+            {/* Bright Background Render Image */}
+            <div className="absolute inset-0 z-0 image-zoom-container">
+              <img
+                src="PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE ESTAR.png"
+                alt="Capa de Projeto Carla Fanton Arquitetura"
+                className="w-full h-full object-cover filter brightness-[0.88] contrast-[1.02] scale-105"
+              />
+              {/* Very Subtle Light Architectural Fade Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-arch-maskBg via-black/25 to-black/35"></div>
+              <div className="absolute inset-0 bg-black/10"></div>
+            </div>
+
+            <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
+              
+              {/* GIANT TRANSPARENT LOGO */}
+              <div className="flex flex-col items-center mb-6 animate-fade-in">
+                <img
+                  src="LOGO_TRANSPARENTE.png"
+                  alt="Carla Fanton Logo Vetorizado Sem Fundo"
+                  className="h-48 sm:h-64 md:h-76 lg:h-84 xl:h-96 w-auto object-contain filter brightness-0 invert drop-shadow-[0_4px_25px_rgba(0,0,0,0.6)] mb-6 hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              {/* QUOTES: "Transformando Ideias em Arquitetura Real" WITH HIGH-CONTRAST SHADOW */}
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif italic text-white font-normal max-w-4xl mx-auto mb-10 leading-relaxed hero-text-shadow">
+                "Transformando Ideias em Arquitetura Real"
+              </h1>
+
+              {/* ACTION BUTTONS */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                <a
+                  href="#portfolio"
+                  className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all shadow-xl shadow-black/40 flex items-center justify-center gap-3 group border border-white/30"
+                >
+                  <span>Ver Galeria de Projetos</span>
+                  <i data-lucide="arrow-down" className="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+                </a>
+                <a
+                  href="#essencia"
+                  className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/70 text-white font-medium text-xs uppercase tracking-widest hover:bg-white/20 transition-all flex items-center justify-center backdrop-blur-md shadow-lg"
+                >
+                  Conheça o Escritório
+                </a>
+              </div>
+
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity">
+              <a href="#essencia" className="text-[10px] uppercase tracking-widest text-white mb-2 hero-text-shadow">Rolar para baixo</a>
+              <div className="w-5 h-9 border-2 border-white rounded-full flex justify-center p-1 shadow-lg">
+                <div className="w-1 h-2.5 bg-white rounded-full animate-bounce"></div>
+              </div>
+            </div>
+
+          </section>
+
+          {/* SECTION 1: NOSSA ESSÊNCIA */}
+          <section id="essencia" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskLight border-b border-arch-border">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                
+                {/* Architect Photo Card */}
+                <div className="lg:col-span-5 relative">
+                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-white mask-card image-zoom-container">
+                    <img
+                      src="FOTO ARQUITETA/066A0454.jpg"
+                      alt="Arq. Carla Fanton"
+                      className="w-full h-[400px] sm:h-[480px] lg:h-[520px] object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                    
+                    <div className="absolute bottom-6 left-6 right-6 text-white">
+                      <span className="text-[11px] font-sans tracking-widest uppercase text-brand-cream font-light">Arquiteta e Urbanista</span>
+                      <h4 className="font-serif-title text-2xl font-normal text-white">Carla Fanton</h4>
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-6 -right-6 w-full h-full border-2 border-brand/30 rounded-2xl -z-0 hidden sm:block"></div>
+                </div>
+
+                {/* Text Content */}
+                <div className="lg:col-span-7 space-y-6">
+                  <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest">
+                    <span className="w-8 h-[2px] bg-brand"></span>
+                    <span>1. Nossa Essência</span>
+                  </div>
+
+                  <h2 className="text-2xl sm:text-4xl font-serif-title text-textMain font-light leading-tight">
+                    Onde a estética apurada encontra a <span className="text-brand italic font-normal">vivência real</span>
+                  </h2>
+
+                  <p className="text-textMuted leading-relaxed font-light text-base sm:text-lg text-justified">
+                    Nosso maior propósito é tirar as suas ideias do papel e transformá-las em arquitetura real. Focados em construções do zero, grandes reformas e projetos empresariais, desenhamos ambientes onde a estética apurada encontra a vivência real de quem os ocupa.
+                  </p>
+                  
+                  <p className="text-textMuted leading-relaxed font-light text-sm sm:text-base text-justified">
+                    Nosso estilo transita por linguagens limpas, funcionais e atemporais — como o <strong className="text-textMain font-normal">Minimalismo</strong>, o <strong className="text-textMain font-normal">Japandi</strong> e o <strong className="text-textMain font-normal">Contemporâneo</strong> —, priorizando sempre proporções exatas. Não acreditamos em fórmulas prontas; acreditamos em entender a fundo quem você é, ou o que sua marca representa, para criar espaços que façam total sentido para a sua rotina e seus objetivos.
+                  </p>
+
+                  <div className="pt-4">
+                    <a
+                      href="#portfolio"
+                      className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-brand text-white font-medium text-xs tracking-widest uppercase hover:bg-brand-dark transition-all shadow-lg shadow-brand/20"
+                    >
+                      <i data-lucide="compass" className="w-4 h-4"></i>
+                      <span>Conheça alguns projetos</span>
+                      <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 2: O QUE FAZEMOS */}
+          <section id="servicos" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskBg border-b border-arch-border">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              
+              <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
+                  <span className="w-8 h-[2px] bg-brand"></span>
+                  <span>O Que Fazemos</span>
+                  <span className="w-8 h-[2px] bg-brand"></span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                  Transformamos necessidades em <span className="text-brand italic font-normal">arquitetura inteligente</span>
+                </h2>
+                <p className="mt-4 text-textMuted font-light text-sm sm:text-base">
+                  Atuamos em quatro frentes principais para atender o seu momento de vida ou o da sua empresa:
+                </p>
+              </div>
+
+              {/* 4 Cards Grid - Responsive Scaling */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {SERVICES.map((serv, index) => (
+                  <div
+                    key={index}
+                    className="relative group rounded-2xl overflow-hidden mask-card min-h-[280px] flex flex-col justify-end p-6 sm:p-8 transition-all duration-500 hover:-translate-y-1"
+                  >
+                    <div className="absolute inset-0 z-0 image-zoom-container">
+                      <img
+                        src={serv.bgImage}
+                        alt={serv.title}
+                        className="w-full h-full object-cover filter brightness-[0.9] contrast-[0.95] group-hover:scale-105 transition-transform duration-700 opacity-25 group-hover:opacity-35"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-transparent"></div>
+                    </div>
+
+                    <div className="relative z-10">
+                      <span className="text-brand font-medium text-xs tracking-widest uppercase mb-2 block">
+                        0{index + 1} // {serv.subtitle}
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-serif-title text-textMain font-normal mb-3 group-hover:text-brand transition-colors">
+                        {serv.title}
+                      </h3>
+                      <p className="text-textMuted font-light text-xs sm:text-sm leading-relaxed text-justified">
+                        {serv.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </section>
+
+          {/* SECTION 3: PORTFÓLIO DE PROJETOS */}
+          <section id="portfolio" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskLight border-b border-arch-border">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              
+              <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
+                  <span className="w-8 h-[2px] bg-brand"></span>
+                  <span>Portfólio Selecionado</span>
+                  <span className="w-8 h-[2px] bg-brand"></span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                  Nossa Vitrine de <span className="text-brand italic font-normal">Projetos</span>
+                </h2>
+                <p className="mt-4 text-textMuted font-light text-sm sm:text-base">
+                  Passe os slides em cada projeto para ver todas as renderizações detalhadas.
+                </p>
+              </div>
+
+              {/* Projects List */}
+              <div className="space-y-16 sm:space-y-20">
+                {PROJECTS.map((proj, pIndex) => {
+                  const currentSlideIndex = projectSlideIndices[proj.id];
+                  const currentImage = proj.images[currentSlideIndex];
+
+                  return (
+                    <div
+                      key={proj.id}
+                      className="mask-card rounded-3xl overflow-hidden p-5 sm:p-8 lg:p-10 border border-arch-border shadow-lg"
+                    >
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                        
+                        {/* Interactive Image Slider Column (7 cols) */}
+                        <div className="lg:col-span-7 flex flex-col space-y-4">
+                          
+                          {/* Main Slide Image Box - Responsive Fluid Ratio */}
+                          <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-arch-maskBg group shadow-md border border-arch-border">
+                            <img
+                              src={currentImage}
+                              alt={`${proj.title} - Foto ${currentSlideIndex + 1}`}
+                              className="w-full h-full object-cover transition-opacity duration-300 cursor-pointer"
+                              onClick={() => openLightbox(proj.images, currentSlideIndex, proj.title)}
+                            />
+
+                            {/* Counter Overlay */}
+                            <div className="absolute top-4 left-4 z-10 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand text-xs font-medium tracking-widest shadow-sm">
+                              {currentSlideIndex + 1} / {proj.images.length} Fotos
+                            </div>
+
+                            {/* Lightbox Trigger Button */}
+                            <button
+                              onClick={() => openLightbox(proj.images, currentSlideIndex, proj.title)}
+                              className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand hover:bg-brand hover:text-white transition-colors shadow-sm"
+                              title="Ampliar em tela cheia"
+                            >
+                              <i data-lucide="maximize-2" className="w-4 h-4"></i>
+                            </button>
+
+                            {/* Prev / Next Slide Controls */}
+                            <button
+                              onClick={() => prevProjectSlide(proj.id, proj.images.length)}
+                              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 backdrop-blur-md text-brand hover:bg-brand hover:text-white hover:scale-105 transition-all shadow-md border border-brand/20"
+                              aria-label="Foto Anterior"
+                            >
+                              <i data-lucide="chevron-left" className="w-5 h-5"></i>
+                            </button>
+                            <button
+                              onClick={() => nextProjectSlide(proj.id, proj.images.length)}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 backdrop-blur-md text-brand hover:bg-brand hover:text-white hover:scale-105 transition-all shadow-md border border-brand/20"
+                              aria-label="Próxima Foto"
+                            >
+                              <i data-lucide="chevron-right" className="w-5 h-5"></i>
+                            </button>
+                          </div>
+
+                          {/* Thumbnail Strip */}
+                          <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 scrollbar-thin">
+                            {proj.images.map((img, imgIdx) => (
+                              <button
+                                key={imgIdx}
+                                onClick={() => setProjectSlideIndices(prev => ({ ...prev, [proj.id]: imgIdx }))}
+                                className={`relative flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                                  currentSlideIndex === imgIdx 
+                                    ? 'border-brand scale-105 shadow-sm' 
+                                    : 'border-transparent opacity-50 hover:opacity-100'
+                                }`}
+                              >
+                                <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                              </button>
+                            ))}
+                          </div>
+
+                        </div>
+
+                        {/* Project Description Column (5 cols) */}
+                        <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+                          <div>
+                            <span className="px-3.5 py-1 rounded-full bg-brand-soft text-brand text-xs font-medium tracking-widest uppercase border border-brand/20">
+                              {proj.category}
+                            </span>
+
+                            <h3 className="text-2xl sm:text-4xl font-serif-title text-textMain font-normal mt-4 mb-1">
+                              {proj.title}
+                            </h3>
+                            <p className="text-brand text-sm font-light italic mb-5">
+                              {proj.subtitle}
+                            </p>
+
+                            <p className="text-textMuted font-light text-sm sm:text-base leading-relaxed text-justified">
+                              {proj.description}
+                            </p>
+                          </div>
+
+                          <div className="pt-4 border-t border-arch-border flex flex-col sm:flex-row items-center gap-4">
+                            <button
+                              onClick={() => openLightbox(proj.images, currentSlideIndex, proj.title)}
+                              className="w-full sm:w-auto px-6 py-3 rounded-full bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all flex items-center justify-center gap-2 shadow-md"
+                            >
+                              <i data-lucide="image" className="w-4 h-4"></i>
+                              <span>Ver Galeria ({proj.images.length})</span>
+                            </button>
+                            
+                            <a
+                              href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-full sm:w-auto px-6 py-3 rounded-full border border-brand/30 text-brand font-medium text-xs uppercase tracking-widest hover:bg-brand/10 transition-all flex items-center justify-center gap-2"
+                            >
+                              <span>Quero um Projeto Assim</span>
+                            </a>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+            </div>
+          </section>
+
+          {/* SECTION 4: NOSSA CASA */}
+          <section id="nossa-casa" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskBg border-b border-arch-border">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                {/* Left Text */}
+                <div className="lg:col-span-5 space-y-6">
+                  <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest">
+                    <span className="w-8 h-[2px] bg-brand"></span>
+                    <span>2. Nossa Casa (O Espaço Físico)</span>
+                  </div>
+
+                  <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                    O Nosso Espaço <span className="text-brand italic font-normal">Físico</span>
+                  </h2>
+
+                  <p className="text-textMuted font-light text-base sm:text-lg leading-relaxed text-justified">
+                    Mais do que um escritório de arquitetura, preparamos um espaço para você se sentir acolhido. Nossa casa é o reflexo do que acreditamos e do que você pode esperar de nós: um ambiente pensado nos detalhes, confortável e inspirador, onde as primeiras ideias do seu projeto vão começar a tomar forma. Sinta-se à vontade.
+                  </p>
+
+                  <div className="p-4 rounded-xl bg-white border border-brand/30 text-brand text-sm flex items-center gap-3 shadow-sm">
+                    <i data-lucide="coffee" className="w-5 h-5 flex-shrink-0"></i>
+                    <span>Venha tomar um café conosco e conhecer nosso espaço de criação.</span>
+                  </div>
+                </div>
+
+                {/* Right Interactive Carousel */}
+                <div className="lg:col-span-7">
+                  <div className="mask-card rounded-3xl p-4 sm:p-6 shadow-xl border border-arch-border relative">
+                    
+                    {/* Main Office Slide */}
+                    <div className="relative rounded-2xl overflow-hidden aspect-[16/11] bg-white group">
+                      <img
+                        src={OFFICE_PHOTOS[officeSlideIndex].url}
+                        alt={OFFICE_PHOTOS[officeSlideIndex].title}
+                        className="w-full h-full object-cover transition-all cursor-pointer"
+                        onClick={() => openLightbox(OFFICE_PHOTOS.map(o => o.url), officeSlideIndex, 'Fotos do Escritório')}
+                      />
+
+                      {/* Photo Badge */}
+                      <div className="absolute top-4 left-4 z-10 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand text-xs font-medium tracking-widest shadow-sm">
+                        Espaço {officeSlideIndex + 1} de {OFFICE_PHOTOS.length}
+                      </div>
+
+                      {/* Controls */}
+                      <button
+                        onClick={prevOfficeSlide}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/90 text-brand hover:bg-brand hover:text-white transition-all shadow-md"
+                      >
+                        <i data-lucide="chevron-left" className="w-5 h-5"></i>
+                      </button>
+                      <button
+                        onClick={nextOfficeSlide}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/90 text-brand hover:bg-brand hover:text-white transition-all shadow-md"
+                      >
+                        <i data-lucide="chevron-right" className="w-5 h-5"></i>
+                      </button>
+
+                      {/* Caption Overlay */}
+                      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-6 text-white">
+                        <h4 className="font-serif-title text-xl font-normal text-white mb-1">
+                          {OFFICE_PHOTOS[officeSlideIndex].title}
+                        </h4>
+                        <p className="text-xs text-gray-200 font-light">
+                          {OFFICE_PHOTOS[officeSlideIndex].description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Thumbnail Strip */}
+                    <div className="flex items-center gap-3 overflow-x-auto pt-4 pb-1">
+                      {OFFICE_PHOTOS.map((item, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setOfficeSlideIndex(idx)}
+                          className={`w-20 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
+                            officeSlideIndex === idx ? 'border-brand scale-105 shadow-md' : 'border-transparent opacity-50'
+                          }`}
+                        >
+                          <img src={item.url} alt={item.title} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* SECTION 5: A JORNADA DO CLIENTE */}
+          <section id="jornada" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskLight border-b border-arch-border">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              
+              <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
+                  <span className="w-8 h-[2px] bg-brand"></span>
+                  <span>3. A Jornada do Cliente</span>
+                  <span className="w-8 h-[2px] bg-brand"></span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                  Processo Claro & <span className="text-brand italic font-normal">Colaborativo</span>
+                </h2>
+                <p className="mt-4 text-textMuted font-light text-sm sm:text-base">
+                  Acreditamos que a excelência nasce da colaboração. O desenvolvimento do seu projeto segue um processo claro, para que você tenha segurança do começo ao fim:
+                </p>
+              </div>
+
+              {/* Steps Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {STEPS.map((step, idx) => (
+                  <div
+                    key={idx}
+                    className="mask-card rounded-2xl p-6 sm:p-8 relative flex flex-col justify-between border border-arch-border hover:border-brand transition-all duration-300"
+                  >
+                    <div>
+                      <div className="text-3xl sm:text-4xl font-serif-title font-light text-brand mb-4">
+                        {step.number}
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-serif-title text-textMain font-normal mb-3">
+                        {step.title}
+                      </h3>
+                      <p className="text-textMuted font-light text-xs sm:text-sm leading-relaxed text-justified">
+                        {step.description}
+                      </p>
+                    </div>
+                    
+                    <div className="mt-6 pt-4 border-t border-arch-border flex items-center justify-between text-xs text-brand font-medium">
+                      <span>Etapa {step.number}</span>
+                      <i data-lucide="check-circle-2" className="w-4 h-4"></i>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </section>
+
+          {/* SECTION 6: CONTATO */}
+          <section id="contato" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskBg border-b border-arch-border">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+                
+                {/* Contact Info */}
+                <div className="lg:col-span-5 space-y-8">
+                  <div>
+                    <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
+                      <span className="w-8 h-[2px] bg-brand"></span>
+                      <span>Fale Conosco</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light mb-4">
+                      Vamos iniciar o seu <span className="text-brand italic font-normal">projeto?</span>
+                    </h2>
+                    <p className="text-textMuted font-light text-base leading-relaxed text-justified">
+                      Estamos prontos para tirar sua ideia do papel. Entre em contato diretamente via WhatsApp, Instagram ou envie uma mensagem no formulário ao lado.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    {/* WhatsApp Box */}
+                    <a
+                      href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-5 sm:p-6 rounded-2xl mask-card flex items-center gap-4 sm:gap-5 hover:border-brand transition-all group"
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
+                        <svg className="w-6 h-6 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24">
+                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <span className="text-xs text-brand font-medium uppercase tracking-widest block">WhatsApp Atendimento</span>
+                        <h4 className="text-base sm:text-lg font-semibold text-textMain group-hover:text-brand transition-colors">(14) 99859-2955</h4>
+                        <p className="text-xs text-textMuted">Clique para iniciar conversa no WhatsApp</p>
+                      </div>
+                    </a>
+
+                    {/* Instagram Box */}
+                    <a
+                      href="https://www.instagram.com/arqcarlafanton/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-5 sm:p-6 rounded-2xl mask-card flex items-center gap-4 sm:gap-5 hover:border-brand transition-all group"
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
+                        <i data-lucide="instagram" className="w-6 h-6 sm:w-7 sm:h-7"></i>
+                      </div>
+                      <div>
+                        <span className="text-xs text-brand font-medium uppercase tracking-widest block">Instagram Oficial</span>
+                        <h4 className="text-base sm:text-lg font-semibold text-textMain group-hover:text-brand transition-colors">@arqcarlafanton</h4>
+                        <p className="text-xs text-textMuted">Clique para ver fotos no Instagram</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Form Column */}
+                <div className="lg:col-span-7">
+                  <div className="mask-card rounded-3xl p-6 sm:p-10 border border-arch-border shadow-xl">
+                    <h3 className="text-xl sm:text-2xl font-serif-title text-textMain font-normal mb-2">
+                      Enviar uma Mensagem
+                    </h3>
+                    <p className="text-textMuted font-light text-xs sm:text-sm mb-6">
+                      Preencha os campos abaixo para enviar um e-mail diretamente para nosso escritório.
+                    </p>
+
+                    {formStatus === 'success' ? (
+                      <div className="p-6 rounded-2xl bg-brand-soft border border-brand text-center space-y-3 animate-fade-in">
+                        <i data-lucide="check-circle" className="w-12 h-12 text-brand mx-auto"></i>
+                        <h4 className="text-xl font-semibold text-textMain">Mensagem Enviada!</h4>
+                        <p className="text-sm text-textMuted">Sua mensagem foi enviada para <strong>arqcarlafanton@gmail.com</strong>. Em breve retornaremos seu contato.</p>
+                        <button
+                          onClick={() => setFormStatus(null)}
+                          className="mt-4 px-6 py-2.5 rounded-full bg-brand text-white text-xs font-medium uppercase tracking-widest"
+                        >
+                          Enviar outra mensagem
+                        </button>
+                      </div>
+                    ) : (
+                      <form 
+                        action="https://formsubmit.co/arqcarlafanton@gmail.com" 
+                        method="POST" 
+                        onSubmit={handleFormSubmit}
+                        className="space-y-5"
+                      >
+                        <input type="hidden" name="_subject" value="Novo Contato do Site - Carla Fanton Arquitetura" />
+                        <input type="hidden" name="_captcha" value="false" />
+                        <input type="hidden" name="_template" value="table" />
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                              Nome Completo *
+                            </label>
+                            <input
+                              type="text"
+                              name="nome"
+                              required
+                              placeholder="Seu nome"
+                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                              Telefone / WhatsApp *
+                            </label>
+                            <input
+                              type="tel"
+                              name="telefone"
+                              required
+                              placeholder="(14) 99999-9999"
+                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                              E-mail *
+                            </label>
+                            <input
+                              type="email"
+                              name="email"
+                              required
+                              placeholder="seu@email.com"
+                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                              Tipo de Projeto
+                            </label>
+                            <select 
+                              name="tipo_projeto"
+                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                            >
+                              <option value="Arquitetura Residencial">Arquitetura Residencial</option>
+                              <option value="Projeto Empresarial">Projeto Empresarial</option>
+                              <option value="Design de Interiores">Design de Interiores</option>
+                              <option value="Reforma">Reforma</option>
+                              <option value="Outro / Consultoria">Outro / Consultoria</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                            Detalhes do Projeto / Mensagem *
+                          </label>
+                          <textarea
+                            name="mensagem"
+                            required
+                            rows="4"
+                            placeholder="Conte-nos um pouco sobre a sua ideia..."
+                            className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                          ></textarea>
+                        </div>
+
+                        <button
+                          type="submit"
+                          disabled={formStatus === 'sending'}
+                          className="w-full py-4 rounded-xl bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 flex items-center justify-center gap-2"
+                        >
+                          {formStatus === 'sending' ? (
+                            <span>Enviando para arqcarlafanton@gmail.com...</span>
+                          ) : (
+                            <>
+                              <i data-lucide="send" className="w-4 h-4"></i>
+                              <span>Enviar Solicitação por E-mail</span>
+                            </>
+                          )}
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* LIGHTBOX MODAL */}
+          {lightboxState.isOpen && (
+            <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-8 animate-fade-in">
+              
+              {/* Header */}
+              <div className="flex items-center justify-between text-white border-b border-white/10 pb-4">
+                <div>
+                  <h4 className="font-serif-title text-xl text-white">
+                    {lightboxState.title}
+                  </h4>
+                  <span className="text-xs text-brand-cream">
+                    Imagem {lightboxState.currentIndex + 1} de {lightboxState.images.length}
+                  </span>
+                </div>
+                <button
+                  onClick={closeLightbox}
+                  className="p-3 rounded-full bg-white/10 hover:bg-brand transition-colors text-white"
+                  title="Fechar (Esc)"
+                >
+                  <i data-lucide="x" className="w-6 h-6"></i>
+                </button>
+              </div>
+
+              {/* Image */}
+              <div className="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
+                <img
+                  src={lightboxState.images[lightboxState.currentIndex]}
+                  alt="Foto Ampliada"
+                  className="max-h-[80vh] max-w-[92vw] object-contain rounded-lg shadow-2xl"
+                />
+
+                <button
+                  onClick={prevLightboxImage}
+                  className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/60 border border-white/20 text-white hover:bg-brand transition-all"
+                >
+                  <i data-lucide="chevron-left" className="w-6 h-6"></i>
+                </button>
+
+                <button
+                  onClick={nextLightboxImage}
+                  className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/60 border border-white/20 text-white hover:bg-brand transition-all"
+                >
+                  <i data-lucide="chevron-right" className="w-6 h-6"></i>
+                </button>
+              </div>
+
+              {/* Thumbnails */}
+              <div className="flex items-center justify-center gap-2 overflow-x-auto pt-4 border-t border-white/10">
+                {lightboxState.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setLightboxState(prev => ({ ...prev, currentIndex: idx }))}
+                    className={`w-14 h-10 rounded-md overflow-hidden border-2 transition-all flex-shrink-0 ${
+                      lightboxState.currentIndex === idx ? 'border-brand scale-110' : 'border-transparent opacity-50'
+                    }`}
+                  >
+                    <img src={img} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+
+            </div>
+          )}
+
+          {/* FOOTER (WITH CLICKABLE LINKS FOR GOOGLE MAPS, WHATSAPP, EMAIL) */}
+          <footer className="py-12 bg-arch-maskBg border-t border-arch-border text-textMuted text-xs">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+              
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-arch-border">
+                
+                {/* Branding & Interactive Contact Links */}
+                <div className="space-y-3 max-w-xl">
+                  <div>
+                    <h4 className="font-serif-title font-medium text-textMain text-base tracking-widest uppercase">
+                      CARLA FANTON
+                    </h4>
+                    <p className="text-xs text-brand font-medium">Arquitetura & Interiores</p>
+                  </div>
+                  
+                  {/* Clickable Interactive Address, Phone & Email Links */}
+                  <div className="space-y-2 text-textMuted text-xs font-light">
+                    {/* Google Maps Link */}
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=R.+Francisco+Munhoz+Cegarra,+1007+-+Jardim+Maria+Luiza,+Bariri+-+SP,+17253-132"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 hover:text-brand transition-colors group"
+                      title="Abrir endereço no Google Maps"
+                    >
+                      <i data-lucide="map-pin" className="w-4 h-4 text-brand flex-shrink-0 group-hover:scale-110 transition-transform"></i>
+                      <span className="underline decoration-brand/30 underline-offset-2">R. Francisco Munhoz Cegarra, 1007 - Jardim Maria Luiza, Bariri - SP, 17253-132</span>
+                    </a>
+
+                    {/* WhatsApp Phone Link */}
+                    <a
+                      href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 hover:text-brand transition-colors group"
+                      title="Abrir no WhatsApp"
+                    >
+                      <i data-lucide="phone" className="w-4 h-4 text-brand flex-shrink-0 group-hover:scale-110 transition-transform"></i>
+                      <span className="underline decoration-brand/30 underline-offset-2">(14) 99859-2955 (WhatsApp)</span>
+                    </a>
+
+                    {/* Mailto Link */}
+                    <a
+                      href="mailto:arqcarlafanton@gmail.com"
+                      className="flex items-center gap-2.5 hover:text-brand transition-colors group"
+                      title="Enviar e-mail"
+                    >
+                      <i data-lucide="mail" className="w-4 h-4 text-brand flex-shrink-0 group-hover:scale-110 transition-transform"></i>
+                      <span className="underline decoration-brand/30 underline-offset-2">arqcarlafanton@gmail.com</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Footer Navigation Links */}
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-textMuted text-xs font-medium uppercase tracking-wider">
+                  <a href="#essencia" className="hover:text-brand transition-colors whitespace-nowrap">Nossa Essência</a>
+                  <a href="#servicos" className="hover:text-brand transition-colors whitespace-nowrap">O Que Fazemos</a>
+                  <a href="#portfolio" className="hover:text-brand transition-colors whitespace-nowrap">Portfólio</a>
+                  <a href="#nossa-casa" className="hover:text-brand transition-colors whitespace-nowrap">Nossa Casa</a>
+                  <a href="#jornada" className="hover:text-brand transition-colors whitespace-nowrap">A Jornada</a>
+                  <a href="#contato" className="hover:text-brand transition-colors whitespace-nowrap">Contato</a>
+                </div>
+
+              </div>
+
+              {/* Copyright */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-textLight text-[11px]">
+                <p>© {new Date().getFullYear()} Carla Fanton Arquitetura & Interiores. Todos os direitos reservados.</p>
+                <div className="flex items-center gap-4">
+                  <a href="https://www.instagram.com/arqcarlafanton/" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors flex items-center gap-1.5">
+                    <i data-lucide="instagram" className="w-3.5 h-3.5"></i>
+                    <span>@arqcarlafanton</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
