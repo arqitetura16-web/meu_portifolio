@@ -2,14 +2,16 @@
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#676e49">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Carla Fanton | Arquitetura e Interiores</title>
   <meta name="description" content="Carla Fanton Arquitetura e Interiores. Projetos residenciais, empresariais, design de interiores e reformas com estética limpa, funcional e atemporal.">
   
-  <!-- Google Fonts: Montserrat (Ultra-thin & Light) + Crimson Pro (Sophisticated Serif) -->
+  <!-- Google Fonts: Montserrat + Crimson Pro -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,7 +23,7 @@
             brand: {
               DEFAULT: '#676e49',
               dark: '#4f5537',
-              darker: '#3a3f28',
+              darker: '#363b24',
               light: '#838b5e',
               soft: '#e9ece0',
               cream: '#f2f4eb'
@@ -59,20 +61,22 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background-color: #eaece4; /* Warm Gray Architectural Mask */
+      background-color: #eaece4;
       color: #1c2018;
       overflow-x: hidden;
       font-weight: 300;
+      -webkit-tap-highlight-color: transparent;
     }
     
     h1, h2, h3, .font-serif-title {
       font-family: 'Crimson Pro', serif;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.015em;
     }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
       background: #eaece4;
@@ -92,34 +96,17 @@
       box-shadow: 0 4px 20px rgba(103, 110, 73, 0.18);
     }
 
-    /* Soft Architectural Mask Card */
+    /* Architectural Mask Card */
     .mask-card {
       background: #ffffff;
       border: 1px solid #d4d8c8;
-      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.04);
-      transition: all 0.4s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      transition: all 0.3s ease;
     }
     
     .mask-card:hover {
       border-color: #676e49;
-      box-shadow: 0 12px 40px rgba(103, 110, 73, 0.15);
-    }
-
-    /* Justified text formatting */
-    .text-justified {
-      text-align: justify;
-      text-justify: inter-word;
-      hyphens: auto;
-    }
-
-    .image-zoom-container {
-      overflow: hidden;
-    }
-    .image-zoom-container img {
-      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .image-zoom-container:hover img {
-      transform: scale(1.04);
+      box-shadow: 0 10px 30px rgba(103, 110, 73, 0.12);
     }
 
     /* Fluid Text Shadows for Hero Contrast */
@@ -128,11 +115,30 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in {
-      animation: fadeIn 0.5s ease-out forwards;
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    /* Prevent iOS automatic input zoom by ensuring 16px font */
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+    @media (min-width: 640px) {
+      input, select, textarea {
+        font-size: 0.875rem !important; /* 14px on tablets/desktop */
+      }
+    }
+
+    /* Hide scrollbars for thumb strips while preserving scroll */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
@@ -141,41 +147,41 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
-    // Direct project data with exact local paths
+    // Direct project data with optimized WebP paths
     const PROJECTS = [
       {
         id: 'tea',
         title: 'Apto TEA',
         subtitle: 'Apartamento de 60m²',
         category: 'Residencial',
-        coverImage: 'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE ESTAR.png',
+        coverImage: 'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-sala_de_estar.webp',
         description: 'O equilíbrio perfeito entre a vanguarda industrial e a sofisticação contemporânea. Projetado para refletir o dinamismo de um jovem casal, este apartamento de 60m² traduz a estética industrial de forma repensada e elegante. Em vez da crueza tradicional do estilo, o projeto adota uma abordagem refinada, onde elementos arrojados recebem um toque inegável de modernidade. O resultado é um lar que abraça a funcionalidade necessária para o ritmo da vida adulta, mantendo uma atmosfera cosmopolita, acolhedora e de alto padrão visual.',
         images: [
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE ESTAR.png',
-          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-SALA DE ESTAR 03.png',
-          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-SALA DE JANTAR E COZINHA.png',
-          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-SALA-JANTAR E ESTAR.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE JANTAR.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 01.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 02.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 03.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-COZINHA 4.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 0.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 01.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 02.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 04.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO CASAL 1.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 01.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 02.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 03.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 04.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-QUARTO DE HOSPEDES 1.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-BANHEIRO 02.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-BANHEIRO 03.png',
-          'PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-BANHEIRO 1.png',
-          'PROJETOS/TEA/Enscape_2026-06-12-09-24-02_11-CORREDOR.png'
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-sala_de_estar.webp',
+          'PROJETOS/TEA/enscape_2026-06-12-09-24-02_11-sala_de_estar_03.webp',
+          'PROJETOS/TEA/enscape_2026-06-12-09-24-02_11-sala_de_jantar_e_cozinha.webp',
+          'PROJETOS/TEA/enscape_2026-06-12-09-24-02_11-sala-jantar_e_estar.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-sala_de_jantar.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-cozinha_01.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-cozinha_02.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-cozinha_03.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-cozinha_4.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_casal_0.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_casal_01.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_casal_02.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_casal_04.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_casal_1.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_de_hospedes_01.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_de_hospedes_02.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_de_hospedes_03.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_de_hospedes_04.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-quarto_de_hospedes_1.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-banheiro_02.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-banheiro_03.webp',
+          'PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-banheiro_1.webp',
+          'PROJETOS/TEA/enscape_2026-06-12-09-24-02_11-corredor.webp'
         ]
       },
       {
@@ -183,21 +189,21 @@
         title: 'Cozinha CEL',
         subtitle: 'Design Compacto de Alto Padrão',
         category: 'Interiores / Cozinha',
-        coverImage: 'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 01.png',
-        description: 'Ousadia e otimização em um design inteligente e arrojado. A Cozinha L&C é um verdadeiro exercício de precisão e estilo em espaços compactos. Para maximizar a área de circulação e convivência, a solução adotada foi a integração de um canto alemão, complementado por um layout em \'U\' que abraça o fogão e a lava-louças com total fluidez. A paleta de cores foge do óbvio ao apostar em uma atmosfera mais escura e marcante. O protagonismo do granito Via Láctea, que inicialmente poderia soar como um desafio para um ambiente menor, provou ser a escolha exata: a pedra cria um contraste sofisticado, harmonizando perfeitamente com os tons claros do projeto e o piso cinza preexistente, garantindo um extremo conforto visual.',
+        coverImage: 'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_01.webp',
+        description: 'Ousadia e otimização em um design inteligente e arrojado. A Cozinha L&C é um verdadeiro exercício de precisão e estilo em espaços compactos. Para maximizar a área de circulação e convivência, a solução adotada foi a integração de um canto alemão, complementado por um layout em \'U\' que abraça o fogão e a lava-louças com total fluidez. A paleta de cores foge do óbvio ao apostar em uma atmosfera mais escura e marcante. O protagonismo do granito Via Láctea cria um contraste sofisticado, harmonizando perfeitamente com os tons claros do projeto e o piso cinza preexistente, garantindo um extremo conforto visual.',
         images: [
-          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 01.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 02.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 03.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 04.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 05.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 06.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-09-35-09_00-IMAGEM 07.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇÃO 3 - 5.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3 - 3.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3 - 4.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3 -1.png',
-          'PROJETOS/CEL/Enscape_2025-02-14-14-22-10_OPÇAO 3.png'
+          'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_01.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_02.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_03.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_04.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_05.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_06.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-09-35-09_00-imagem_07.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-14-22-10_opcao_3_-_5.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-14-22-10_opcao_3_-_3.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-14-22-10_opcao_3_-_4.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-14-22-10_opcao_3_-1.webp',
+          'PROJETOS/CEL/enscape_2025-02-14-14-22-10_opcao_3.webp'
         ]
       },
       {
@@ -205,52 +211,52 @@
         title: 'Residência REM',
         subtitle: 'Edícula Praiana & Refúgio de Design',
         category: 'Arquitetura Residencial',
-        coverImage: 'PROJETOS/REM/Enscape_2025-08-28-15-09-43_00-FACHADA.png',
-        description: 'Minimalismo rústico e atmosfera intimista em uma releitura praiana. Pensada para ser o refúgio perfeito de um casal e sua filha, a Residência M&R eleva o conceito de edícula praiana a um novo patamar de design. A arquitetura de linhas retas, destacada pelo uso da platibanda e detalhes em alumínio, confere à casa uma fachada de visual enxuto, moderno e profundamente intimista. Na área externa, o diálogo entre a piscina e o espaço gourmet é ditado pela escolha criteriosa de revestimentos amadeirados e em tons de cinza. Essa composição cria uma dualidade encantadora, unindo a limpeza do design minimalista ao aconchego tátil do estilo rústico, resultando em um cenário ideal para criar memórias em família.',
+        coverImage: 'PROJETOS/REM/enscape_2025-08-28-15-09-43_00-fachada.webp',
+        description: 'Minimalismo rústico e atmosfera intimista em uma releitura praiana. Pensada para ser o refúgio perfeito de um casal e sua filha, a Residência M&R eleva o conceito de edícula praiana a um novo patamar de design. A arquitetura de linhas retas, destacada pelo uso da platibanda e detalhes em alumínio, confere à casa uma fachada de visual enxuto, moderno e profundamente intimista. Na área externa, o diálogo entre a piscina e o espaço gourmet é ditado pela escolha criteriosa de revestimentos amadeirados e tons de cinza.',
         images: [
-          'PROJETOS/REM/Enscape_2025-08-28-15-09-43_00-FACHADA.png',
-          'PROJETOS/REM/Enscape_2025-08-28-15-09-43_00-EXTERNO.png',
-          'PROJETOS/REM/Enscape_2025-09-28-13-34-15_ÁREA GOURMET RENDER.png',
-          'PROJETOS/REM/Enscape_2025-09-28-13-34-15_ÁREA GOURMET RENDER 2.png',
-          'PROJETOS/REM/Enscape_2025-09-28-13-34-15_ÁREA GOURMET RENDER 3.png',
-          'PROJETOS/REM/Enscape_2025-09-28-12-51-34_Enscape cena 1.png',
-          'PROJETOS/REM/Enscape_2026-01-10-11-24-34_03-frente quarto.png',
-          'PROJETOS/REM/Enscape_2026-01-10-11-24-34_03-fundo.png',
-          'PROJETOS/REM/Enscape_2025-11-29-16-27-58_QUARTO 2 (5).png',
-          'PROJETOS/REM/SUITE.png'
+          'PROJETOS/REM/enscape_2025-08-28-15-09-43_00-fachada.webp',
+          'PROJETOS/REM/enscape_2025-08-28-15-09-43_00-externo.webp',
+          'PROJETOS/REM/enscape_2025-09-28-13-34-15_area_gourmet_render.webp',
+          'PROJETOS/REM/enscape_2025-09-28-13-34-15_area_gourmet_render_2.webp',
+          'PROJETOS/REM/enscape_2025-09-28-13-34-15_area_gourmet_render_3.webp',
+          'PROJETOS/REM/enscape_2025-09-28-12-51-34_enscape_cena_1.webp',
+          'PROJETOS/REM/enscape_2026-01-10-11-24-34_03-frente_quarto.webp',
+          'PROJETOS/REM/enscape_2026-01-10-11-24-34_03-fundo.webp',
+          'PROJETOS/REM/enscape_2025-11-29-16-27-58_quarto_2_5.webp',
+          'PROJETOS/REM/suite.webp'
         ]
       }
     ];
 
-    // Real Office Photos Array from FOTOS DO ESCRITORIO
+    // Office Photos Array (WebP)
     const OFFICE_PHOTOS = [
       {
-        url: 'FOTOS DO ESCRITORIO/fachada.jfif',
+        url: 'FOTOS DO ESCRITORIO/fachada.webp',
         title: 'Fachada do Escritório',
         description: 'Design de linhas limpas e acolhedoras para receber nossos clientes.'
       },
       {
-        url: 'FOTOS DO ESCRITORIO/entrada.png',
+        url: 'FOTOS DO ESCRITORIO/entrada.webp',
         title: 'Entrada & Acolhimento',
         description: 'O primeiro ponto de contato com nossa atmosfera inspiradora.'
       },
       {
-        url: 'FOTOS DO ESCRITORIO/frente atendimento.png',
+        url: 'FOTOS DO ESCRITORIO/frente_atendimento.webp',
         title: 'Espaço de Atendimento',
         description: 'Onde as conversas francas e as primeiras ideias ganham vida.'
       },
       {
-        url: 'FOTOS DO ESCRITORIO/janela.png',
+        url: 'FOTOS DO ESCRITORIO/janela.webp',
         title: 'Iluminação & Detalhes',
         description: 'Ambiente pensado nos detalhes, confortável e banhado por luz natural.'
       },
       {
-        url: 'FOTOS DO ESCRITORIO/tv cozinha.png',
+        url: 'FOTOS DO ESCRITORIO/tv_cozinha.webp',
         title: 'Espaço Integrado',
         description: 'Integração perfeita entre ateliê de criação e área de convivência.'
       },
       {
-        url: 'FOTOS DO ESCRITORIO/banheiro final.png',
+        url: 'FOTOS DO ESCRITORIO/banheiro_final.webp',
         title: 'Detalhes de Acabamento',
         description: 'A prova viva da nossa busca pela perfeição em cada revestimento.'
       }
@@ -260,25 +266,25 @@
       {
         title: 'Arquitetura Residencial',
         subtitle: 'Casas Feitas Sob Medida',
-        bgImage: 'assets/servico_residencial.jpg',
+        bgImage: 'assets/servico_residencial.webp',
         description: 'A materialização do seu lar, da fundação ao último detalhe. Projetamos casas do zero, alinhando a estética da fachada à inteligência da planta para criar um espaço feito sob medida para a sua história.'
       },
       {
         title: 'Projetos Empresariais',
         subtitle: 'Estratégia & Identidade Comercial',
-        bgImage: 'assets/servico_empresarial.jpg',
+        bgImage: 'assets/servico_empresarial.webp',
         description: 'O espaço físico como estratégia de negócio. Desenhamos ambientes comerciais e corporativos que traduzem a identidade da sua marca, melhoram o fluxo de trabalho e criam uma conexão imediata com o seu cliente.'
       },
       {
         title: 'Design de Interiores',
         subtitle: 'Funcionalidade & Atmosfera',
-        bgImage: 'assets/servico_interiores.jpg',
+        bgImage: 'assets/servico_interiores.webp',
         description: 'O cuidado de olhar para dentro. Projetos focados em extrair o máximo potencial dos espaços, equilibrando escolhas de materiais, iluminação e mobiliário para criar ambientes que funcionem perfeitamente para a sua rotina.'
       },
       {
         title: 'Reformas',
         subtitle: 'A Arte de Ressignificar Espaços',
-        bgImage: 'assets/servico_reformas.jpg',
+        bgImage: 'assets/servico_reformas.webp',
         description: 'Desenhamos novas possibilidades para imóveis existentes, resolvendo desafios de layout e modernizando estruturas para adaptar o ambiente a uma nova fase da sua vida.'
       }
     ];
@@ -291,13 +297,13 @@
       },
       {
         number: '02',
-        title: 'O Desenvolvimento Compartilhado',
+        title: 'O Desenvolvimento',
         description: 'Construímos o conceito juntos. Você acompanha a evolução do desenho de perto, garantindo que as suas expectativas guiem o nosso traço.'
       },
       {
         number: '03',
         title: 'O Refinamento',
-        description: 'A fase de lapidar. Ajustes finos de layout, escolha criteriosa de materiais e a aprovação das volumetrias.'
+        description: 'A fase de lapidar. Ajustes finos de layout, escolha criteriosa de materiais e a aprovação das volumetrias e acabamentos.'
       },
       {
         number: '04',
@@ -315,6 +321,10 @@
       const [officeSlideIndex, setOfficeSlideIndex] = useState(0);
 
       const [formStatus, setFormStatus] = useState(null);
+
+      // Touch swipe tracking refs
+      const touchStartX = useRef(0);
+      const touchEndX = useRef(0);
 
       // Handle keyboard navigation for Lightbox
       useEffect(() => {
@@ -339,7 +349,7 @@
       useEffect(() => {
         const handleScroll = () => {
           const sections = ['inicio', 'essencia', 'servicos', 'portfolio', 'nossa-casa', 'jornada', 'contato'];
-          const scrollPos = window.scrollY + 180;
+          const scrollPos = window.scrollY + 140;
 
           for (const sectionId of sections) {
             const el = document.getElementById(sectionId);
@@ -354,7 +364,7 @@
           }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
       }, []);
 
@@ -372,12 +382,41 @@
         }));
       };
 
+      // Touch handlers for project swipe
+      const handleProjectTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+      };
+
+      const handleProjectTouchEnd = (e, projectId, totalImages) => {
+        touchEndX.current = e.changedTouches[0].clientX;
+        const diff = touchStartX.current - touchEndX.current;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) {
+            nextProjectSlide(projectId, totalImages);
+          } else {
+            prevProjectSlide(projectId, totalImages);
+          }
+        }
+      };
+
       const nextOfficeSlide = () => {
         setOfficeSlideIndex(prev => (prev + 1) % OFFICE_PHOTOS.length);
       };
 
       const prevOfficeSlide = () => {
         setOfficeSlideIndex(prev => (prev - 1 + OFFICE_PHOTOS.length) % OFFICE_PHOTOS.length);
+      };
+
+      const handleOfficeTouchEnd = (e) => {
+        touchEndX.current = e.changedTouches[0].clientX;
+        const diff = touchStartX.current - touchEndX.current;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) {
+            nextOfficeSlide();
+          } else {
+            prevOfficeSlide();
+          }
+        }
       };
 
       const openLightbox = (imageList, index, titleName) => {
@@ -404,30 +443,39 @@
         }));
       };
 
+      const handleLightboxTouchEnd = (e) => {
+        touchEndX.current = e.changedTouches[0].clientX;
+        const diff = touchStartX.current - touchEndX.current;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) {
+            nextLightboxImage();
+          } else {
+            prevLightboxImage();
+          }
+        }
+      };
+
       const handleFormSubmit = (e) => {
         setFormStatus('sending');
-        setTimeout(() => {
-          setFormStatus('success');
-        }, 1200);
       };
 
       return (
-        <div className="min-h-screen bg-arch-maskBg text-textMain flex flex-col justify-between">
+        <div className="min-h-screen bg-arch-maskBg text-textMain flex flex-col justify-between overflow-x-hidden">
           
-          {/* GREEN TOP NAVIGATION HEADER BAR (RESPONSIVE WRAP-SAFE NAV) */}
+          {/* GREEN TOP NAVIGATION HEADER BAR */}
           <header className="fixed top-0 left-0 right-0 z-50 green-header text-white transition-all duration-300">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
               
-              {/* Text Only Branding on Top-Left */}
+              {/* Text Branding on Top-Left */}
               <a href="#inicio" className="flex items-center gap-2 group whitespace-nowrap">
                 <div className="flex flex-col">
-                  <span className="font-serif-title font-medium text-lg sm:text-xl text-white tracking-widest leading-none">CARLA FANTON</span>
-                  <span className="text-[10px] sm:text-[11px] text-brand-cream/90 tracking-widest uppercase font-light mt-1">Arquitetura e Interiores</span>
+                  <span className="font-serif-title font-normal sm:font-medium text-base sm:text-xl text-white tracking-widest leading-none">CARLA FANTON</span>
+                  <span className="text-[9px] sm:text-[11px] text-brand-cream/90 tracking-widest uppercase font-light mt-1">Arquitetura e Interiores</span>
                 </div>
               </a>
 
               {/* Desktop Nav Links */}
-              <nav className="hidden lg:flex items-center space-x-5 xl:space-x-8">
+              <nav className="hidden lg:flex items-center space-x-5 xl:space-x-7">
                 {[
                   { id: 'essencia', label: 'Nossa Essência' },
                   { id: 'servicos', label: 'O Que Fazemos' },
@@ -453,106 +501,115 @@
                 ))}
               </nav>
 
-              {/* WhatsApp Quick Button */}
-              <div className="hidden sm:flex items-center">
+              {/* Header Right Actions */}
+              <div className="flex items-center gap-2 sm:gap-3">
+                {/* Direct WhatsApp Callout */}
                 <a
-                  href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                  href="https://api.whatsapp.com/send/?phone=5514998592955&text=Ol%C3%A1%2C%20visitei%20o%20site%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20projeto%21"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-brand font-semibold hover:bg-brand-cream transition-all duration-300 text-xs uppercase tracking-wider flex items-center gap-2 shadow-md hover:shadow-lg whitespace-nowrap"
+                  className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-brand font-semibold hover:bg-brand-cream transition-all duration-300 text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 shadow-md hover:shadow-lg whitespace-nowrap active:scale-95"
+                  aria-label="Abrir WhatsApp"
                 >
-                  <svg className="w-4 h-4 fill-current text-brand" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-brand" viewBox="0 0 24 24">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                   </svg>
-                  <span>Falar no WhatsApp</span>
+                  <span className="hidden sm:inline">WhatsApp</span>
                 </a>
-              </div>
 
-              {/* Mobile Hamburger Toggle */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-white hover:text-brand-cream rounded-lg focus:outline-none"
-                aria-label="Abrir Menu"
-              >
-                <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-6 h-6"></i>
-              </button>
+                {/* Mobile Hamburger Button */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="lg:hidden p-2 text-white hover:text-brand-cream rounded-lg focus:outline-none active:scale-95"
+                  aria-label="Abrir Menu"
+                >
+                  <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-6 h-6"></i>
+                </button>
+              </div>
             </div>
 
             {/* Mobile Menu Drawer */}
             {mobileMenuOpen && (
-              <div className="lg:hidden bg-brand-dark px-6 py-6 space-y-4 animate-fade-in border-t border-white/10">
+              <div className="lg:hidden bg-brand-darker/95 backdrop-blur-xl px-6 py-6 space-y-4 animate-fade-in border-t border-white/10 shadow-2xl">
                 {[
-                  { id: 'essencia', label: 'Nossa Essência' },
-                  { id: 'servicos', label: 'O Que Fazemos' },
-                  { id: 'portfolio', label: 'Portfólio' },
-                  { id: 'nossa-casa', label: 'Nossa Casa' },
-                  { id: 'jornada', label: 'A Jornada' },
-                  { id: 'contato', label: 'Contato' }
+                  { id: 'essencia', label: '1. Nossa Essência' },
+                  { id: 'servicos', label: '2. O Que Fazemos' },
+                  { id: 'portfolio', label: '3. Portfólio de Projetos' },
+                  { id: 'nossa-casa', label: '4. Nossa Casa (Escritório)' },
+                  { id: 'jornada', label: '5. A Jornada do Cliente' },
+                  { id: 'contato', label: '6. Fale Conosco' }
                 ].map((item) => (
                   <a
                     key={item.id}
                     href={`#${item.id}`}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block text-sm font-medium tracking-wider uppercase text-white hover:text-brand-cream"
+                    className="block text-sm font-medium tracking-wider uppercase text-brand-cream/90 hover:text-white py-2 border-b border-white/5 active:text-white"
                   >
                     {item.label}
                   </a>
                 ))}
-                <a
-                  href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full mt-4 py-3 rounded-xl bg-white text-brand font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
-                >
-                  Falar no WhatsApp
-                </a>
+                
+                <div className="pt-2">
+                  <a
+                    href="https://api.whatsapp.com/send/?phone=5514998592955&text=Ol%C3%A1%2C%20visitei%20o%20site%20e%20gostaria%20de%20falar%20sobre%20um%20projeto%21"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-3.5 rounded-xl bg-white text-brand font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md active:bg-brand-cream"
+                  >
+                    <svg className="w-4 h-4 fill-current text-brand" viewBox="0 0 24 24">
+                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                    <span>Falar no WhatsApp</span>
+                  </a>
+                </div>
               </div>
             )}
           </header>
 
-          {/* HERO SECTION: BRIGHT CRISP COVER IMAGE + SUBTLE LIGHT FADE + GIANT LOGO */}
-          <section id="inicio" className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-24 overflow-hidden border-b border-arch-border">
+          {/* HERO SECTION */}
+          <section id="inicio" className="relative min-h-[90svh] sm:min-h-[92vh] flex items-center justify-center pt-24 sm:pt-28 pb-16 sm:pb-24 overflow-hidden border-b border-arch-border">
             
-            {/* Bright Background Render Image */}
-            <div className="absolute inset-0 z-0 image-zoom-container">
+            {/* Background Render */}
+            <div className="absolute inset-0 z-0">
               <img
-                src="PROJETOS/TEA/Enscape_2026-06-09-19-30-35_11-SALA DE ESTAR.png"
+                src="PROJETOS/TEA/enscape_2026-06-09-19-30-35_11-sala_de_estar.webp"
                 alt="Capa de Projeto Carla Fanton Arquitetura"
-                className="w-full h-full object-cover filter brightness-[0.88] contrast-[1.02] scale-105"
+                className="w-full h-full object-cover filter brightness-[0.88] contrast-[1.02]"
+                fetchpriority="high"
               />
-              {/* Very Subtle Light Architectural Fade Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-arch-maskBg via-black/25 to-black/35"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-arch-maskBg via-black/30 to-black/40"></div>
               <div className="absolute inset-0 bg-black/10"></div>
             </div>
 
             <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
               
-              {/* GIANT TRANSPARENT LOGO */}
-              <div className="flex flex-col items-center mb-6 animate-fade-in">
+              {/* Responsive Logo */}
+              <div className="flex flex-col items-center mb-4 sm:mb-6 animate-fade-in">
                 <img
-                  src="LOGO_TRANSPARENTE.png"
+                  src="logo_transparente.webp"
                   alt="Carla Fanton Logo Vetorizado Sem Fundo"
-                  className="h-48 sm:h-64 md:h-76 lg:h-84 xl:h-96 w-auto object-contain filter brightness-0 invert drop-shadow-[0_4px_25px_rgba(0,0,0,0.6)] mb-6 hover:scale-105 transition-transform duration-500"
+                  className="h-28 sm:h-44 md:h-56 lg:h-72 w-auto max-w-[80vw] object-contain filter brightness-0 invert drop-shadow-[0_4px_25px_rgba(0,0,0,0.6)] mb-2 sm:mb-4 hover:scale-105 transition-transform duration-500"
                 />
               </div>
 
-              {/* QUOTES: "Transformando Ideias em Arquitetura Real" WITH HIGH-CONTRAST SHADOW */}
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif italic text-white font-normal max-w-4xl mx-auto mb-10 leading-relaxed hero-text-shadow">
+              {/* High-Contrast Architectural Quote */}
+              <h1 className="text-xl sm:text-3xl md:text-5xl font-serif italic text-white font-normal max-w-4xl mx-auto mb-8 sm:mb-10 leading-snug sm:leading-relaxed hero-text-shadow px-2">
                 "Transformando Ideias em Arquitetura Real"
               </h1>
 
-              {/* ACTION BUTTONS */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0">
                 <a
                   href="#portfolio"
-                  className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all shadow-xl shadow-black/40 flex items-center justify-center gap-3 group border border-white/30"
+                  className="w-full sm:w-auto px-7 py-3.5 sm:py-4 rounded-full bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all shadow-xl shadow-black/40 flex items-center justify-center gap-3 group border border-white/30 active:scale-98"
                 >
                   <span>Ver Galeria de Projetos</span>
                   <i data-lucide="arrow-down" className="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
                 </a>
                 <a
                   href="#essencia"
-                  className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/70 text-white font-medium text-xs uppercase tracking-widest hover:bg-white/20 transition-all flex items-center justify-center backdrop-blur-md shadow-lg"
+                  className="w-full sm:w-auto px-7 py-3.5 sm:py-4 rounded-full border border-white/80 text-white font-medium text-xs uppercase tracking-widest hover:bg-white/20 transition-all flex items-center justify-center backdrop-blur-md shadow-lg active:scale-98"
                 >
                   Conheça o Escritório
                 </a>
@@ -561,61 +618,63 @@
             </div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity">
-              <a href="#essencia" className="text-[10px] uppercase tracking-widest text-white mb-2 hero-text-shadow">Rolar para baixo</a>
-              <div className="w-5 h-9 border-2 border-white rounded-full flex justify-center p-1 shadow-lg">
-                <div className="w-1 h-2.5 bg-white rounded-full animate-bounce"></div>
+            <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity">
+              <a href="#essencia" className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white mb-1.5 hero-text-shadow">Rolar</a>
+              <div className="w-4 h-7 sm:w-5 sm:h-9 border-2 border-white/90 rounded-full flex justify-center p-0.5 sm:p-1 shadow-lg">
+                <div className="w-1 h-2 bg-white rounded-full animate-bounce"></div>
               </div>
             </div>
 
           </section>
 
           {/* SECTION 1: NOSSA ESSÊNCIA */}
-          <section id="essencia" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskLight border-b border-arch-border">
+          <section id="essencia" className="py-14 sm:py-20 lg:py-28 relative bg-arch-maskLight border-b border-arch-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
                 
                 {/* Architect Photo Card */}
                 <div className="lg:col-span-5 relative">
-                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-white mask-card image-zoom-container">
+                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-white mask-card">
                     <img
-                      src="FOTO ARQUITETA/066A0454.jpg"
+                      src="FOTO ARQUITETA/066a0454.webp"
                       alt="Arq. Carla Fanton"
-                      className="w-full h-[400px] sm:h-[480px] lg:h-[520px] object-cover object-top"
+                      className="w-full h-[340px] sm:h-[480px] lg:h-[520px] object-cover object-top"
+                      loading="lazy"
+                      decoding="async"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
                     
-                    <div className="absolute bottom-6 left-6 right-6 text-white">
-                      <span className="text-[11px] font-sans tracking-widest uppercase text-brand-cream font-light">Arquiteta e Urbanista</span>
-                      <h4 className="font-serif-title text-2xl font-normal text-white">Carla Fanton</h4>
+                    <div className="absolute bottom-5 left-5 right-5 text-white">
+                      <span className="text-[10px] sm:text-[11px] font-sans tracking-widest uppercase text-brand-cream font-light">Arquiteta e Urbanista</span>
+                      <h4 className="font-serif-title text-xl sm:text-2xl font-normal text-white">Carla Fanton</h4>
                     </div>
                   </div>
-                  <div className="absolute -bottom-6 -right-6 w-full h-full border-2 border-brand/30 rounded-2xl -z-0 hidden sm:block"></div>
+                  <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-brand/30 rounded-2xl -z-0 hidden sm:block"></div>
                 </div>
 
                 {/* Text Content */}
-                <div className="lg:col-span-7 space-y-6">
+                <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                   <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest">
-                    <span className="w-8 h-[2px] bg-brand"></span>
+                    <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                     <span>1. Nossa Essência</span>
                   </div>
 
-                  <h2 className="text-2xl sm:text-4xl font-serif-title text-textMain font-light leading-tight">
+                  <h2 className="text-2xl sm:text-4xl font-serif-title text-textMain font-light leading-snug sm:leading-tight">
                     Onde a estética apurada encontra a <span className="text-brand italic font-normal">vivência real</span>
                   </h2>
 
-                  <p className="text-textMuted leading-relaxed font-light text-base sm:text-lg text-justified">
+                  <p className="text-textMuted leading-relaxed font-light text-sm sm:text-base text-left sm:text-justify">
                     Nosso maior propósito é tirar as suas ideias do papel e transformá-las em arquitetura real. Focados em construções do zero, grandes reformas e projetos empresariais, desenhamos ambientes onde a estética apurada encontra a vivência real de quem os ocupa.
                   </p>
                   
-                  <p className="text-textMuted leading-relaxed font-light text-sm sm:text-base text-justified">
+                  <p className="text-textMuted leading-relaxed font-light text-sm sm:text-base text-left sm:text-justify">
                     Nosso estilo transita por linguagens limpas, funcionais e atemporais — como o <strong className="text-textMain font-normal">Minimalismo</strong>, o <strong className="text-textMain font-normal">Japandi</strong> e o <strong className="text-textMain font-normal">Contemporâneo</strong> —, priorizando sempre proporções exatas. Não acreditamos em fórmulas prontas; acreditamos em entender a fundo quem você é, ou o que sua marca representa, para criar espaços que façam total sentido para a sua rotina e seus objetivos.
                   </p>
 
-                  <div className="pt-4">
+                  <div className="pt-2 sm:pt-4">
                     <a
                       href="#portfolio"
-                      className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-brand text-white font-medium text-xs tracking-widest uppercase hover:bg-brand-dark transition-all shadow-lg shadow-brand/20"
+                      className="inline-flex items-center gap-2.5 px-6 py-3 sm:px-7 sm:py-3.5 rounded-full bg-brand text-white font-medium text-xs tracking-widest uppercase hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 active:scale-95"
                     >
                       <i data-lucide="compass" className="w-4 h-4"></i>
                       <span>Conheça alguns projetos</span>
@@ -629,47 +688,49 @@
           </section>
 
           {/* SECTION 2: O QUE FAZEMOS */}
-          <section id="servicos" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskBg border-b border-arch-border">
+          <section id="servicos" className="py-14 sm:py-20 lg:py-28 relative bg-arch-maskBg border-b border-arch-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               
-              <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
-                  <span className="w-8 h-[2px] bg-brand"></span>
+              <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-2 sm:mb-3">
+                  <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                   <span>O Que Fazemos</span>
-                  <span className="w-8 h-[2px] bg-brand"></span>
+                  <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                 </div>
-                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light leading-tight">
                   Transformamos necessidades em <span className="text-brand italic font-normal">arquitetura inteligente</span>
                 </h2>
-                <p className="mt-4 text-textMuted font-light text-sm sm:text-base">
+                <p className="mt-3 sm:mt-4 text-textMuted font-light text-xs sm:text-base">
                   Atuamos em quatro frentes principais para atender o seu momento de vida ou o da sua empresa:
                 </p>
               </div>
 
-              {/* 4 Cards Grid - Responsive Scaling */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* 4 Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
                 {SERVICES.map((serv, index) => (
                   <div
                     key={index}
-                    className="relative group rounded-2xl overflow-hidden mask-card min-h-[280px] flex flex-col justify-end p-6 sm:p-8 transition-all duration-500 hover:-translate-y-1"
+                    className="relative group rounded-2xl overflow-hidden mask-card min-h-[260px] sm:min-h-[280px] flex flex-col justify-end p-5 sm:p-7 transition-all duration-300 hover:-translate-y-1"
                   >
-                    <div className="absolute inset-0 z-0 image-zoom-container">
+                    <div className="absolute inset-0 z-0">
                       <img
                         src={serv.bgImage}
                         alt={serv.title}
                         className="w-full h-full object-cover filter brightness-[0.9] contrast-[0.95] group-hover:scale-105 transition-transform duration-700 opacity-25 group-hover:opacity-35"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-transparent"></div>
                     </div>
 
                     <div className="relative z-10">
-                      <span className="text-brand font-medium text-xs tracking-widest uppercase mb-2 block">
+                      <span className="text-brand font-medium text-[11px] sm:text-xs tracking-widest uppercase mb-1.5 block">
                         0{index + 1} // {serv.subtitle}
                       </span>
-                      <h3 className="text-xl sm:text-2xl font-serif-title text-textMain font-normal mb-3 group-hover:text-brand transition-colors">
+                      <h3 className="text-lg sm:text-2xl font-serif-title text-textMain font-normal mb-2 sm:mb-3 group-hover:text-brand transition-colors">
                         {serv.title}
                       </h3>
-                      <p className="text-textMuted font-light text-xs sm:text-sm leading-relaxed text-justified">
+                      <p className="text-textMuted font-light text-xs sm:text-sm leading-relaxed text-left">
                         {serv.description}
                       </p>
                     </div>
@@ -681,131 +742,139 @@
           </section>
 
           {/* SECTION 3: PORTFÓLIO DE PROJETOS */}
-          <section id="portfolio" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskLight border-b border-arch-border">
+          <section id="portfolio" className="py-14 sm:py-20 lg:py-28 relative bg-arch-maskLight border-b border-arch-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               
-              <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
-                  <span className="w-8 h-[2px] bg-brand"></span>
+              <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-2 sm:mb-3">
+                  <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                   <span>Portfólio Selecionado</span>
-                  <span className="w-8 h-[2px] bg-brand"></span>
+                  <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                 </div>
-                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light leading-tight">
                   Nossa Vitrine de <span className="text-brand italic font-normal">Projetos</span>
                 </h2>
-                <p className="mt-4 text-textMuted font-light text-sm sm:text-base">
-                  Passe os slides em cada projeto para ver todas as renderizações detalhadas.
+                <p className="mt-2 sm:mt-3 text-textMuted font-light text-xs sm:text-sm">
+                  Arraste ou clique nas setas para navegar por todas as renderizações de cada projeto.
                 </p>
               </div>
 
               {/* Projects List */}
-              <div className="space-y-16 sm:space-y-20">
-                {PROJECTS.map((proj, pIndex) => {
+              <div className="space-y-12 sm:space-y-16 lg:space-y-20">
+                {PROJECTS.map((proj) => {
                   const currentSlideIndex = projectSlideIndices[proj.id];
                   const currentImage = proj.images[currentSlideIndex];
 
                   return (
                     <div
                       key={proj.id}
-                      className="mask-card rounded-3xl overflow-hidden p-5 sm:p-8 lg:p-10 border border-arch-border shadow-lg"
+                      className="mask-card rounded-2xl sm:rounded-3xl overflow-hidden p-4 sm:p-7 lg:p-10 border border-arch-border shadow-lg"
                     >
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                         
-                        {/* Interactive Image Slider Column (7 cols) */}
-                        <div className="lg:col-span-7 flex flex-col space-y-4">
+                        {/* Interactive Image Slider Column */}
+                        <div className="lg:col-span-7 flex flex-col space-y-3 sm:space-y-4">
                           
-                          {/* Main Slide Image Box - Responsive Fluid Ratio */}
-                          <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-arch-maskBg group shadow-md border border-arch-border">
+                          {/* Main Slide Image Box with Touch Swipe Support */}
+                          <div 
+                            className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[16/10] bg-arch-maskBg group shadow-md border border-arch-border select-none"
+                            onTouchStart={handleProjectTouchStart}
+                            onTouchEnd={(e) => handleProjectTouchEnd(e, proj.id, proj.images.length)}
+                          >
                             <img
                               src={currentImage}
                               alt={`${proj.title} - Foto ${currentSlideIndex + 1}`}
                               className="w-full h-full object-cover transition-opacity duration-300 cursor-pointer"
+                              loading="lazy"
+                              decoding="async"
                               onClick={() => openLightbox(proj.images, currentSlideIndex, proj.title)}
                             />
 
                             {/* Counter Overlay */}
-                            <div className="absolute top-4 left-4 z-10 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand text-xs font-medium tracking-widest shadow-sm">
+                            <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand text-[11px] sm:text-xs font-medium tracking-widest shadow-sm">
                               {currentSlideIndex + 1} / {proj.images.length} Fotos
                             </div>
 
                             {/* Lightbox Trigger Button */}
                             <button
                               onClick={() => openLightbox(proj.images, currentSlideIndex, proj.title)}
-                              className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand hover:bg-brand hover:text-white transition-colors shadow-sm"
+                              className="absolute top-3 right-3 z-10 p-2 sm:p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand hover:bg-brand hover:text-white transition-colors shadow-sm active:scale-95"
                               title="Ampliar em tela cheia"
+                              aria-label="Ampliar foto"
                             >
-                              <i data-lucide="maximize-2" className="w-4 h-4"></i>
+                              <i data-lucide="maximize-2" className="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </button>
 
                             {/* Prev / Next Slide Controls */}
                             <button
                               onClick={() => prevProjectSlide(proj.id, proj.images.length)}
-                              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 backdrop-blur-md text-brand hover:bg-brand hover:text-white hover:scale-105 transition-all shadow-md border border-brand/20"
+                              className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/90 backdrop-blur-md text-brand hover:bg-brand hover:text-white hover:scale-105 transition-all shadow-md border border-brand/20 active:scale-90"
                               aria-label="Foto Anterior"
                             >
-                              <i data-lucide="chevron-left" className="w-5 h-5"></i>
+                              <i data-lucide="chevron-left" className="w-4 h-4 sm:w-5 sm:h-5"></i>
                             </button>
                             <button
                               onClick={() => nextProjectSlide(proj.id, proj.images.length)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 backdrop-blur-md text-brand hover:bg-brand hover:text-white hover:scale-105 transition-all shadow-md border border-brand/20"
+                              className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/90 backdrop-blur-md text-brand hover:bg-brand hover:text-white hover:scale-105 transition-all shadow-md border border-brand/20 active:scale-90"
                               aria-label="Próxima Foto"
                             >
-                              <i data-lucide="chevron-right" className="w-5 h-5"></i>
+                              <i data-lucide="chevron-right" className="w-4 h-4 sm:w-5 sm:h-5"></i>
                             </button>
                           </div>
 
                           {/* Thumbnail Strip */}
-                          <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 scrollbar-thin">
+                          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar sm:scrollbar-thin">
                             {proj.images.map((img, imgIdx) => (
                               <button
                                 key={imgIdx}
                                 onClick={() => setProjectSlideIndices(prev => ({ ...prev, [proj.id]: imgIdx }))}
-                                className={`relative flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                                className={`relative flex-shrink-0 w-14 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all ${
                                   currentSlideIndex === imgIdx 
                                     ? 'border-brand scale-105 shadow-sm' 
-                                    : 'border-transparent opacity-50 hover:opacity-100'
+                                    : 'border-transparent opacity-60 hover:opacity-100'
                                 }`}
+                                aria-label={`Ir para foto ${imgIdx + 1}`}
                               >
-                                <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                                <img src={img} alt="Thumbnail" className="w-full h-full object-cover" loading="lazy" />
                               </button>
                             ))}
                           </div>
 
                         </div>
 
-                        {/* Project Description Column (5 cols) */}
-                        <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+                        {/* Project Description Column */}
+                        <div className="lg:col-span-5 flex flex-col justify-between space-y-4 sm:space-y-6">
                           <div>
-                            <span className="px-3.5 py-1 rounded-full bg-brand-soft text-brand text-xs font-medium tracking-widest uppercase border border-brand/20">
+                            <span className="px-3 py-1 rounded-full bg-brand-soft text-brand text-[10px] sm:text-xs font-medium tracking-widest uppercase border border-brand/20">
                               {proj.category}
                             </span>
 
-                            <h3 className="text-2xl sm:text-4xl font-serif-title text-textMain font-normal mt-4 mb-1">
+                            <h3 className="text-xl sm:text-3xl font-serif-title text-textMain font-normal mt-3 mb-0.5 sm:mb-1">
                               {proj.title}
                             </h3>
-                            <p className="text-brand text-sm font-light italic mb-5">
+                            <p className="text-brand text-xs sm:text-sm font-light italic mb-3 sm:mb-4">
                               {proj.subtitle}
                             </p>
 
-                            <p className="text-textMuted font-light text-sm sm:text-base leading-relaxed text-justified">
+                            <p className="text-textMuted font-light text-xs sm:text-sm leading-relaxed text-left sm:text-justify">
                               {proj.description}
                             </p>
                           </div>
 
-                          <div className="pt-4 border-t border-arch-border flex flex-col sm:flex-row items-center gap-4">
+                          <div className="pt-4 border-t border-arch-border flex flex-col sm:flex-row items-center gap-3">
                             <button
                               onClick={() => openLightbox(proj.images, currentSlideIndex, proj.title)}
-                              className="w-full sm:w-auto px-6 py-3 rounded-full bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all flex items-center justify-center gap-2 shadow-md"
+                              className="w-full sm:w-auto px-5 py-3 rounded-full bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all flex items-center justify-center gap-2 shadow-md active:scale-98"
                             >
                               <i data-lucide="image" className="w-4 h-4"></i>
                               <span>Ver Galeria ({proj.images.length})</span>
                             </button>
                             
                             <a
-                              href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                              href={`https://api.whatsapp.com/send/?phone=5514998592955&text=Ol%C3%A1%20Carla%2C%20adorei%20o%20projeto%20${encodeURIComponent(proj.title)}%20no%20site%20e%20gostaria%20de%20conversar%20sobre%20o%20meu%21`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="w-full sm:w-auto px-6 py-3 rounded-full border border-brand/30 text-brand font-medium text-xs uppercase tracking-widest hover:bg-brand/10 transition-all flex items-center justify-center gap-2"
+                              className="w-full sm:w-auto px-5 py-3 rounded-full border border-brand/40 text-brand font-medium text-xs uppercase tracking-widest hover:bg-brand/10 transition-all flex items-center justify-center gap-2 active:scale-98"
                             >
                               <span>Quero um Projeto Assim</span>
                             </a>
@@ -822,27 +891,27 @@
           </section>
 
           {/* SECTION 4: NOSSA CASA */}
-          <section id="nossa-casa" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskBg border-b border-arch-border">
+          <section id="nossa-casa" className="py-14 sm:py-20 lg:py-28 relative bg-arch-maskBg border-b border-arch-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 
                 {/* Left Text */}
-                <div className="lg:col-span-5 space-y-6">
+                <div className="lg:col-span-5 space-y-5 sm:space-y-6">
                   <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest">
-                    <span className="w-8 h-[2px] bg-brand"></span>
+                    <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                     <span>2. Nossa Casa (O Espaço Físico)</span>
                   </div>
 
-                  <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                  <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light leading-tight">
                     O Nosso Espaço <span className="text-brand italic font-normal">Físico</span>
                   </h2>
 
-                  <p className="text-textMuted font-light text-base sm:text-lg leading-relaxed text-justified">
+                  <p className="text-textMuted font-light text-sm sm:text-base leading-relaxed text-left sm:text-justify">
                     Mais do que um escritório de arquitetura, preparamos um espaço para você se sentir acolhido. Nossa casa é o reflexo do que acreditamos e do que você pode esperar de nós: um ambiente pensado nos detalhes, confortável e inspirador, onde as primeiras ideias do seu projeto vão começar a tomar forma. Sinta-se à vontade.
                   </p>
 
-                  <div className="p-4 rounded-xl bg-white border border-brand/30 text-brand text-sm flex items-center gap-3 shadow-sm">
+                  <div className="p-4 rounded-xl bg-white border border-brand/30 text-brand text-xs sm:text-sm flex items-center gap-3 shadow-sm">
                     <i data-lucide="coffee" className="w-5 h-5 flex-shrink-0"></i>
                     <span>Venha tomar um café conosco e conhecer nosso espaço de criação.</span>
                   </div>
@@ -850,58 +919,67 @@
 
                 {/* Right Interactive Carousel */}
                 <div className="lg:col-span-7">
-                  <div className="mask-card rounded-3xl p-4 sm:p-6 shadow-xl border border-arch-border relative">
+                  <div className="mask-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 shadow-xl border border-arch-border relative">
                     
-                    {/* Main Office Slide */}
-                    <div className="relative rounded-2xl overflow-hidden aspect-[16/11] bg-white group">
+                    {/* Main Office Slide with Touch Swipe */}
+                    <div 
+                      className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[16/11] bg-white group select-none"
+                      onTouchStart={handleProjectTouchStart}
+                      onTouchEnd={handleOfficeTouchEnd}
+                    >
                       <img
                         src={OFFICE_PHOTOS[officeSlideIndex].url}
                         alt={OFFICE_PHOTOS[officeSlideIndex].title}
                         className="w-full h-full object-cover transition-all cursor-pointer"
+                        loading="lazy"
+                        decoding="async"
                         onClick={() => openLightbox(OFFICE_PHOTOS.map(o => o.url), officeSlideIndex, 'Fotos do Escritório')}
                       />
 
                       {/* Photo Badge */}
-                      <div className="absolute top-4 left-4 z-10 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand text-xs font-medium tracking-widest shadow-sm">
+                      <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-brand/20 text-brand text-[11px] sm:text-xs font-medium tracking-widest shadow-sm">
                         Espaço {officeSlideIndex + 1} de {OFFICE_PHOTOS.length}
                       </div>
 
                       {/* Controls */}
                       <button
                         onClick={prevOfficeSlide}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/90 text-brand hover:bg-brand hover:text-white transition-all shadow-md"
+                        className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 text-brand hover:bg-brand hover:text-white transition-all shadow-md active:scale-90"
+                        aria-label="Foto Anterior"
                       >
-                        <i data-lucide="chevron-left" className="w-5 h-5"></i>
+                        <i data-lucide="chevron-left" className="w-4 h-4 sm:w-5 sm:h-5"></i>
                       </button>
                       <button
                         onClick={nextOfficeSlide}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/90 text-brand hover:bg-brand hover:text-white transition-all shadow-md"
+                        className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 text-brand hover:bg-brand hover:text-white transition-all shadow-md active:scale-90"
+                        aria-label="Próxima Foto"
                       >
-                        <i data-lucide="chevron-right" className="w-5 h-5"></i>
+                        <i data-lucide="chevron-right" className="w-4 h-4 sm:w-5 sm:h-5"></i>
                       </button>
 
                       {/* Caption Overlay */}
-                      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-6 text-white">
-                        <h4 className="font-serif-title text-xl font-normal text-white mb-1">
+                      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 sm:p-6 text-white">
+                        <h4 className="font-serif-title text-base sm:text-xl font-normal text-white mb-0.5 sm:mb-1">
                           {OFFICE_PHOTOS[officeSlideIndex].title}
                         </h4>
-                        <p className="text-xs text-gray-200 font-light">
+                        <p className="text-[11px] sm:text-xs text-gray-200 font-light">
                           {OFFICE_PHOTOS[officeSlideIndex].description}
                         </p>
                       </div>
                     </div>
 
                     {/* Thumbnail Strip */}
-                    <div className="flex items-center gap-3 overflow-x-auto pt-4 pb-1">
+                    <div className="flex items-center gap-2 overflow-x-auto pt-3 pb-1 no-scrollbar sm:scrollbar-thin">
                       {OFFICE_PHOTOS.map((item, idx) => (
                         <button
                           key={idx}
                           onClick={() => setOfficeSlideIndex(idx)}
-                          className={`w-20 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
-                            officeSlideIndex === idx ? 'border-brand scale-105 shadow-md' : 'border-transparent opacity-50'
+                          className={`w-16 h-11 sm:w-20 sm:h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
+                            officeSlideIndex === idx ? 'border-brand scale-105 shadow-md' : 'border-transparent opacity-60'
                           }`}
+                          aria-label={`Espaço ${idx + 1}`}
                         >
-                          <img src={item.url} alt={item.title} className="w-full h-full object-cover" />
+                          <img src={item.url} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
                         </button>
                       ))}
                     </div>
@@ -915,43 +993,43 @@
           </section>
 
           {/* SECTION 5: A JORNADA DO CLIENTE */}
-          <section id="jornada" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskLight border-b border-arch-border">
+          <section id="jornada" className="py-14 sm:py-20 lg:py-28 relative bg-arch-maskLight border-b border-arch-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               
-              <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
-                  <span className="w-8 h-[2px] bg-brand"></span>
+              <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+                <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-2 sm:mb-3">
+                  <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                   <span>3. A Jornada do Cliente</span>
-                  <span className="w-8 h-[2px] bg-brand"></span>
+                  <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                 </div>
-                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light">
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light leading-tight">
                   Processo Claro & <span className="text-brand italic font-normal">Colaborativo</span>
                 </h2>
-                <p className="mt-4 text-textMuted font-light text-sm sm:text-base">
-                  Acreditamos que a excelência nasce da colaboração. O desenvolvimento do seu projeto segue um processo claro, para que você tenha segurança do começo ao fim:
+                <p className="mt-2 sm:mt-3 text-textMuted font-light text-xs sm:text-base">
+                  Acreditamos que a excelência nasce da colaboração. O desenvolvimento do seu projeto segue um processo transparente:
                 </p>
               </div>
 
               {/* Steps Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
                 {STEPS.map((step, idx) => (
                   <div
                     key={idx}
-                    className="mask-card rounded-2xl p-6 sm:p-8 relative flex flex-col justify-between border border-arch-border hover:border-brand transition-all duration-300"
+                    className="mask-card rounded-2xl p-5 sm:p-7 relative flex flex-col justify-between border border-arch-border hover:border-brand transition-all duration-300"
                   >
                     <div>
-                      <div className="text-3xl sm:text-4xl font-serif-title font-light text-brand mb-4">
+                      <div className="text-2xl sm:text-4xl font-serif-title font-light text-brand mb-2 sm:mb-3">
                         {step.number}
                       </div>
-                      <h3 className="text-lg sm:text-xl font-serif-title text-textMain font-normal mb-3">
+                      <h3 className="text-base sm:text-xl font-serif-title text-textMain font-normal mb-2">
                         {step.title}
                       </h3>
-                      <p className="text-textMuted font-light text-xs sm:text-sm leading-relaxed text-justified">
+                      <p className="text-textMuted font-light text-xs sm:text-sm leading-relaxed text-left">
                         {step.description}
                       </p>
                     </div>
                     
-                    <div className="mt-6 pt-4 border-t border-arch-border flex items-center justify-between text-xs text-brand font-medium">
+                    <div className="mt-5 pt-3 border-t border-arch-border flex items-center justify-between text-[11px] sm:text-xs text-brand font-medium">
                       <span>Etapa {step.number}</span>
                       <i data-lucide="check-circle-2" className="w-4 h-4"></i>
                     </div>
@@ -963,43 +1041,43 @@
           </section>
 
           {/* SECTION 6: CONTATO */}
-          <section id="contato" className="py-16 sm:py-24 lg:py-32 relative bg-arch-maskBg border-b border-arch-border">
+          <section id="contato" className="py-14 sm:py-20 lg:py-28 relative bg-arch-maskBg border-b border-arch-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 
                 {/* Contact Info */}
-                <div className="lg:col-span-5 space-y-8">
+                <div className="lg:col-span-5 space-y-6 sm:space-y-8">
                   <div>
-                    <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-3">
-                      <span className="w-8 h-[2px] bg-brand"></span>
+                    <div className="inline-flex items-center gap-2 text-brand font-medium text-xs uppercase tracking-widest mb-2 sm:mb-3">
+                      <span className="w-6 sm:w-8 h-[2px] bg-brand"></span>
                       <span>Fale Conosco</span>
                     </div>
-                    <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light mb-4">
+                    <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif-title text-textMain font-light mb-3 sm:mb-4 leading-tight">
                       Vamos iniciar o seu <span className="text-brand italic font-normal">projeto?</span>
                     </h2>
-                    <p className="text-textMuted font-light text-base leading-relaxed text-justified">
+                    <p className="text-textMuted font-light text-sm sm:text-base leading-relaxed text-left sm:text-justify">
                       Estamos prontos para tirar sua ideia do papel. Entre em contato diretamente via WhatsApp, Instagram ou envie uma mensagem no formulário ao lado.
                     </p>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {/* WhatsApp Box */}
                     <a
-                      href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                      href="https://api.whatsapp.com/send/?phone=5514998592955&text=Ol%C3%A1%20Carla%2C%20visitei%20o%20site%20e%20gostaria%20de%20iniciar%20uma%20conversa%20sobre%20meu%20projeto%21"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-5 sm:p-6 rounded-2xl mask-card flex items-center gap-4 sm:gap-5 hover:border-brand transition-all group"
+                      className="p-4 sm:p-6 rounded-2xl mask-card flex items-center gap-3.5 sm:gap-5 hover:border-brand transition-all group active:scale-98"
                     >
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
-                        <svg className="w-6 h-6 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24">
+                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
+                        <svg className="w-5 h-5 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24">
                           <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                         </svg>
                       </div>
                       <div>
-                        <span className="text-xs text-brand font-medium uppercase tracking-widest block">WhatsApp Atendimento</span>
-                        <h4 className="text-base sm:text-lg font-semibold text-textMain group-hover:text-brand transition-colors">(14) 99859-2955</h4>
-                        <p className="text-xs text-textMuted">Clique para iniciar conversa no WhatsApp</p>
+                        <span className="text-[10px] sm:text-xs text-brand font-medium uppercase tracking-widest block">WhatsApp Atendimento</span>
+                        <h4 className="text-sm sm:text-lg font-semibold text-textMain group-hover:text-brand transition-colors">(14) 99859-2955</h4>
+                        <p className="text-[11px] sm:text-xs text-textMuted">Clique para iniciar conversa no WhatsApp</p>
                       </div>
                     </a>
 
@@ -1008,15 +1086,15 @@
                       href="https://www.instagram.com/arqcarlafanton/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-5 sm:p-6 rounded-2xl mask-card flex items-center gap-4 sm:gap-5 hover:border-brand transition-all group"
+                      className="p-4 sm:p-6 rounded-2xl mask-card flex items-center gap-3.5 sm:gap-5 hover:border-brand transition-all group active:scale-98"
                     >
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
-                        <i data-lucide="instagram" className="w-6 h-6 sm:w-7 sm:h-7"></i>
+                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
+                        <i data-lucide="instagram" className="w-5 h-5 sm:w-7 sm:h-7"></i>
                       </div>
                       <div>
-                        <span className="text-xs text-brand font-medium uppercase tracking-widest block">Instagram Oficial</span>
-                        <h4 className="text-base sm:text-lg font-semibold text-textMain group-hover:text-brand transition-colors">@arqcarlafanton</h4>
-                        <p className="text-xs text-textMuted">Clique para ver fotos no Instagram</p>
+                        <span className="text-[10px] sm:text-xs text-brand font-medium uppercase tracking-widest block">Instagram Oficial</span>
+                        <h4 className="text-sm sm:text-lg font-semibold text-textMain group-hover:text-brand transition-colors">@arqcarlafanton</h4>
+                        <p className="text-[11px] sm:text-xs text-textMuted">Clique para ver fotos no Instagram</p>
                       </div>
                     </a>
                   </div>
@@ -1024,22 +1102,22 @@
 
                 {/* Form Column */}
                 <div className="lg:col-span-7">
-                  <div className="mask-card rounded-3xl p-6 sm:p-10 border border-arch-border shadow-xl">
-                    <h3 className="text-xl sm:text-2xl font-serif-title text-textMain font-normal mb-2">
+                  <div className="mask-card rounded-2xl sm:rounded-3xl p-5 sm:p-9 border border-arch-border shadow-xl">
+                    <h3 className="text-xl sm:text-2xl font-serif-title text-textMain font-normal mb-1 sm:mb-2">
                       Enviar uma Mensagem
                     </h3>
-                    <p className="text-textMuted font-light text-xs sm:text-sm mb-6">
+                    <p className="text-textMuted font-light text-xs sm:text-sm mb-5 sm:mb-6">
                       Preencha os campos abaixo para enviar um e-mail diretamente para nosso escritório.
                     </p>
 
                     {formStatus === 'success' ? (
                       <div className="p-6 rounded-2xl bg-brand-soft border border-brand text-center space-y-3 animate-fade-in">
-                        <i data-lucide="check-circle" className="w-12 h-12 text-brand mx-auto"></i>
-                        <h4 className="text-xl font-semibold text-textMain">Mensagem Enviada!</h4>
-                        <p className="text-sm text-textMuted">Sua mensagem foi enviada para <strong>arqcarlafanton@gmail.com</strong>. Em breve retornaremos seu contato.</p>
+                        <i data-lucide="check-circle" className="w-10 h-10 text-brand mx-auto"></i>
+                        <h4 className="text-lg sm:text-xl font-semibold text-textMain">Mensagem Enviada!</h4>
+                        <p className="text-xs sm:text-sm text-textMuted">Sua mensagem foi enviada para <strong>arqcarlafanton@gmail.com</strong>. Em breve retornaremos seu contato.</p>
                         <button
                           onClick={() => setFormStatus(null)}
-                          className="mt-4 px-6 py-2.5 rounded-full bg-brand text-white text-xs font-medium uppercase tracking-widest"
+                          className="mt-4 px-5 py-2.5 rounded-full bg-brand text-white text-xs font-medium uppercase tracking-widest"
                         >
                           Enviar outra mensagem
                         </button>
@@ -1049,15 +1127,15 @@
                         action="https://formsubmit.co/arqcarlafanton@gmail.com" 
                         method="POST" 
                         onSubmit={handleFormSubmit}
-                        className="space-y-5"
+                        className="space-y-4 sm:space-y-5"
                       >
                         <input type="hidden" name="_subject" value="Novo Contato do Site - Carla Fanton Arquitetura" />
                         <input type="hidden" name="_captcha" value="false" />
                         <input type="hidden" name="_template" value="table" />
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                           <div>
-                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                            <label className="block text-[11px] sm:text-xs font-medium text-textMain uppercase tracking-widest mb-1.5">
                               Nome Completo *
                             </label>
                             <input
@@ -1065,11 +1143,11 @@
                               name="nome"
                               required
                               placeholder="Seu nome"
-                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                              className="w-full px-3.5 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain focus:outline-none focus:border-brand transition-colors"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                            <label className="block text-[11px] sm:text-xs font-medium text-textMain uppercase tracking-widest mb-1.5">
                               Telefone / WhatsApp *
                             </label>
                             <input
@@ -1077,14 +1155,14 @@
                               name="telefone"
                               required
                               placeholder="(14) 99999-9999"
-                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                              className="w-full px-3.5 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain focus:outline-none focus:border-brand transition-colors"
                             />
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                           <div>
-                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                            <label className="block text-[11px] sm:text-xs font-medium text-textMain uppercase tracking-widest mb-1.5">
                               E-mail *
                             </label>
                             <input
@@ -1092,16 +1170,16 @@
                               name="email"
                               required
                               placeholder="seu@email.com"
-                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                              className="w-full px-3.5 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain focus:outline-none focus:border-brand transition-colors"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                            <label className="block text-[11px] sm:text-xs font-medium text-textMain uppercase tracking-widest mb-1.5">
                               Tipo de Projeto
                             </label>
                             <select 
                               name="tipo_projeto"
-                              className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                              className="w-full px-3.5 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain focus:outline-none focus:border-brand transition-colors"
                             >
                               <option value="Arquitetura Residencial">Arquitetura Residencial</option>
                               <option value="Projeto Empresarial">Projeto Empresarial</option>
@@ -1113,7 +1191,7 @@
                         </div>
 
                         <div>
-                          <label className="block text-xs font-medium text-textMain uppercase tracking-widest mb-2">
+                          <label className="block text-[11px] sm:text-xs font-medium text-textMain uppercase tracking-widest mb-1.5">
                             Detalhes do Projeto / Mensagem *
                           </label>
                           <textarea
@@ -1121,14 +1199,14 @@
                             required
                             rows="4"
                             placeholder="Conte-nos um pouco sobre a sua ideia..."
-                            className="w-full px-4 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain text-sm focus:outline-none focus:border-brand transition-colors"
+                            className="w-full px-3.5 py-3 rounded-xl bg-arch-maskBg border border-arch-border text-textMain focus:outline-none focus:border-brand transition-colors"
                           ></textarea>
                         </div>
 
                         <button
                           type="submit"
                           disabled={formStatus === 'sending'}
-                          className="w-full py-4 rounded-xl bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 flex items-center justify-center gap-2"
+                          className="w-full py-3.5 sm:py-4 rounded-xl bg-brand text-white font-medium text-xs uppercase tracking-widest hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 flex items-center justify-center gap-2 active:scale-98"
                         >
                           {formStatus === 'sending' ? (
                             <span>Enviando para arqcarlafanton@gmail.com...</span>
@@ -1151,58 +1229,65 @@
 
           {/* LIGHTBOX MODAL */}
           {lightboxState.isOpen && (
-            <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-8 animate-fade-in">
+            <div 
+              className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-3 sm:p-6 animate-fade-in select-none"
+              onTouchStart={handleProjectTouchStart}
+              onTouchEnd={handleLightboxTouchEnd}
+            >
               
               {/* Header */}
-              <div className="flex items-center justify-between text-white border-b border-white/10 pb-4">
+              <div className="flex items-center justify-between text-white border-b border-white/10 pb-3 sm:pb-4">
                 <div>
-                  <h4 className="font-serif-title text-xl text-white">
+                  <h4 className="font-serif-title text-base sm:text-xl text-white">
                     {lightboxState.title}
                   </h4>
-                  <span className="text-xs text-brand-cream">
+                  <span className="text-[11px] sm:text-xs text-brand-cream">
                     Imagem {lightboxState.currentIndex + 1} de {lightboxState.images.length}
                   </span>
                 </div>
                 <button
                   onClick={closeLightbox}
-                  className="p-3 rounded-full bg-white/10 hover:bg-brand transition-colors text-white"
+                  className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-brand transition-colors text-white active:scale-90"
                   title="Fechar (Esc)"
+                  aria-label="Fechar"
                 >
-                  <i data-lucide="x" className="w-6 h-6"></i>
+                  <i data-lucide="x" className="w-5 h-5 sm:w-6 sm:h-6"></i>
                 </button>
               </div>
 
               {/* Image */}
-              <div className="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
+              <div className="relative flex-1 flex items-center justify-center my-2 sm:my-4 overflow-hidden">
                 <img
                   src={lightboxState.images[lightboxState.currentIndex]}
                   alt="Foto Ampliada"
-                  className="max-h-[80vh] max-w-[92vw] object-contain rounded-lg shadow-2xl"
+                  className="max-h-[75vh] sm:max-h-[82vh] max-w-[94vw] object-contain rounded-lg shadow-2xl transition-opacity duration-200"
                 />
 
                 <button
                   onClick={prevLightboxImage}
-                  className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/60 border border-white/20 text-white hover:bg-brand transition-all"
+                  className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 p-2.5 sm:p-4 rounded-full bg-black/60 border border-white/20 text-white hover:bg-brand transition-all active:scale-90"
+                  aria-label="Foto anterior"
                 >
-                  <i data-lucide="chevron-left" className="w-6 h-6"></i>
+                  <i data-lucide="chevron-left" className="w-5 h-5 sm:w-6 sm:h-6"></i>
                 </button>
 
                 <button
                   onClick={nextLightboxImage}
-                  className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/60 border border-white/20 text-white hover:bg-brand transition-all"
+                  className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 p-2.5 sm:p-4 rounded-full bg-black/60 border border-white/20 text-white hover:bg-brand transition-all active:scale-90"
+                  aria-label="Próxima foto"
                 >
-                  <i data-lucide="chevron-right" className="w-6 h-6"></i>
+                  <i data-lucide="chevron-right" className="w-5 h-5 sm:w-6 sm:h-6"></i>
                 </button>
               </div>
 
               {/* Thumbnails */}
-              <div className="flex items-center justify-center gap-2 overflow-x-auto pt-4 border-t border-white/10">
+              <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pt-3 border-t border-white/10 no-scrollbar sm:scrollbar-thin">
                 {lightboxState.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setLightboxState(prev => ({ ...prev, currentIndex: idx }))}
-                    className={`w-14 h-10 rounded-md overflow-hidden border-2 transition-all flex-shrink-0 ${
-                      lightboxState.currentIndex === idx ? 'border-brand scale-110' : 'border-transparent opacity-50'
+                    className={`w-12 h-9 sm:w-16 sm:h-11 rounded-md overflow-hidden border-2 transition-all flex-shrink-0 ${
+                      lightboxState.currentIndex === idx ? 'border-brand scale-110 shadow-lg' : 'border-transparent opacity-50'
                     }`}
                   >
                     <img src={img} className="w-full h-full object-cover" />
@@ -1213,22 +1298,38 @@
             </div>
           )}
 
-          {/* FOOTER (WITH CLICKABLE LINKS FOR GOOGLE MAPS, WHATSAPP, EMAIL) */}
-          <footer className="py-12 bg-arch-maskBg border-t border-arch-border text-textMuted text-xs">
+          {/* FLOATING WHATSAPP BUTTON (FOR MOBILE & QUICK ACCESS) */}
+          <a
+            href="https://api.whatsapp.com/send/?phone=5514998592955&text=Ol%C3%A1%20Carla%2C%20estou%20no%20site%20e%20gostaria%20de%20falar%20sobre%20um%20projeto%21"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-5 right-5 z-40 p-3.5 sm:p-4 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group"
+            aria-label="Falar no WhatsApp"
+            title="Fale conosco no WhatsApp"
+          >
+            <svg className="w-6 h-6 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold px-0 group-hover:px-2">
+              WhatsApp
+            </span>
+          </a>
+
+          {/* FOOTER */}
+          <footer className="py-10 sm:py-12 bg-arch-maskBg border-t border-arch-border text-textMuted text-xs">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
               
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-arch-border">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-arch-border">
                 
-                {/* Branding & Interactive Contact Links */}
+                {/* Branding & Contact Links */}
                 <div className="space-y-3 max-w-xl">
                   <div>
-                    <h4 className="font-serif-title font-medium text-textMain text-base tracking-widest uppercase">
+                    <h4 className="font-serif-title font-normal sm:font-medium text-textMain text-base tracking-widest uppercase">
                       CARLA FANTON
                     </h4>
                     <p className="text-xs text-brand font-medium">Arquitetura & Interiores</p>
                   </div>
                   
-                  {/* Clickable Interactive Address, Phone & Email Links */}
                   <div className="space-y-2 text-textMuted text-xs font-light">
                     {/* Google Maps Link */}
                     <a
@@ -1244,7 +1345,7 @@
 
                     {/* WhatsApp Phone Link */}
                     <a
-                      href="https://api.whatsapp.com/send/?phone=5514998592955&text&type=phone_number&app_absent=0"
+                      href="https://api.whatsapp.com/send/?phone=5514998592955&text=Ol%C3%A1%20Carla%2C%20visitei%20o%20site%20e%20gostaria%20de%20falar%20sobre%20um%20projeto%21"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2.5 hover:text-brand transition-colors group"
@@ -1267,7 +1368,7 @@
                 </div>
 
                 {/* Footer Navigation Links */}
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-textMuted text-xs font-medium uppercase tracking-wider">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 text-textMuted text-[11px] sm:text-xs font-medium uppercase tracking-wider">
                   <a href="#essencia" className="hover:text-brand transition-colors whitespace-nowrap">Nossa Essência</a>
                   <a href="#servicos" className="hover:text-brand transition-colors whitespace-nowrap">O Que Fazemos</a>
                   <a href="#portfolio" className="hover:text-brand transition-colors whitespace-nowrap">Portfólio</a>
@@ -1279,7 +1380,7 @@
               </div>
 
               {/* Copyright */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-textLight text-[11px]">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-textLight text-[11px]">
                 <p>© {new Date().getFullYear()} Carla Fanton Arquitetura & Interiores. Todos os direitos reservados.</p>
                 <div className="flex items-center gap-4">
                   <a href="https://www.instagram.com/arqcarlafanton/" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors flex items-center gap-1.5">
