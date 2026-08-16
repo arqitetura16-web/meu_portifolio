@@ -487,25 +487,6 @@
         setFormStatus('success_whatsapp');
       };
 
-      const handleSendEmail = (e) => {
-        e.preventDefault();
-        if (!formData.nome || !formData.mensagem) {
-          alert('Por favor, preencha o seu Nome e a Mensagem.');
-          return;
-        }
-
-        const subject = `Novo Contato do Site - ${formData.nome} (${formData.tipo_projeto})`;
-        const body = `Nome: ${formData.nome}\n` +
-          `Telefone/WhatsApp: ${formData.telefone}\n` +
-          `E-mail: ${formData.email}\n` +
-          `Tipo de Projeto: ${formData.tipo_projeto}\n\n` +
-          `Mensagem:\n${formData.mensagem}`;
-
-        const mailtoUrl = `mailto:arqcarlafanton@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailtoUrl;
-        setFormStatus('success_email');
-      };
-
       return (
         <div className="min-h-screen bg-arch-maskBg text-textMain flex flex-col justify-between overflow-x-hidden">
           
@@ -1116,7 +1097,7 @@
                       rel="noopener noreferrer"
                       className="p-4 sm:p-6 rounded-2xl mask-card flex items-center gap-3.5 sm:gap-5 hover:border-brand transition-all group active:scale-98"
                     >
-                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
+                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-transparent border-2 border-brand/40 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
                         <svg className="w-5 h-5 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24">
                           <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                         </svg>
@@ -1135,8 +1116,12 @@
                       rel="noopener noreferrer"
                       className="p-4 sm:p-6 rounded-2xl mask-card flex items-center gap-3.5 sm:gap-5 hover:border-brand transition-all group active:scale-98"
                     >
-                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-brand-soft border border-brand/30 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
-                        <i data-lucide="instagram" className="w-5 h-5 sm:w-7 sm:h-7"></i>
+                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-transparent border-2 border-brand/40 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-colors flex-shrink-0">
+                        <svg className="w-5 h-5 sm:w-7 sm:h-7 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                        </svg>
                       </div>
                       <div>
                         <span className="text-[10px] sm:text-xs text-brand font-medium uppercase tracking-widest block">Instagram Oficial</span>
@@ -1154,12 +1139,12 @@
                       Enviar uma Mensagem
                     </h3>
                     <p className="text-textMuted font-light text-xs sm:text-sm mb-5 sm:mb-6">
-                      Preencha os campos abaixo para enviar um e-mail diretamente para nosso escritório.
+                      Preencha os campos abaixo para conversar diretamente pelo WhatsApp com nosso escritório.
                     </p>
 
                     {formStatus === 'success_whatsapp' ? (
                       <div className="p-6 sm:p-8 rounded-2xl bg-brand-soft border border-brand text-center space-y-4 animate-fade-in">
-                        <div className="w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center mx-auto shadow-md">
+                        <div className="w-12 h-12 rounded-full bg-brand text-white flex items-center justify-center mx-auto shadow-md">
                           <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
                             <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                           </svg>
@@ -1167,27 +1152,6 @@
                         <h4 className="text-xl sm:text-2xl font-serif-title text-textMain font-normal">WhatsApp Aberto!</h4>
                         <p className="text-xs sm:text-sm text-textMuted max-w-md mx-auto leading-relaxed">
                           Sua mensagem foi estruturada e encaminhada para o WhatsApp de atendimento: <strong>(14) 99859-2955</strong>.
-                        </p>
-                        <div className="pt-2">
-                          <button
-                            onClick={() => {
-                              setFormData({ nome: '', telefone: '', email: '', tipo_projeto: 'Arquitetura Residencial', mensagem: '' });
-                              setFormStatus(null);
-                            }}
-                            className="px-6 py-2.5 rounded-full bg-brand text-white text-xs font-medium uppercase tracking-widest hover:bg-brand-dark transition-all shadow-md active:scale-95"
-                          >
-                            Enviar outra mensagem
-                          </button>
-                        </div>
-                      </div>
-                    ) : formStatus === 'success_email' ? (
-                      <div className="p-6 sm:p-8 rounded-2xl bg-brand-soft border border-brand text-center space-y-4 animate-fade-in">
-                        <div className="w-12 h-12 rounded-full bg-brand text-white flex items-center justify-center mx-auto shadow-md">
-                          <i data-lucide="mail" className="w-6 h-6"></i>
-                        </div>
-                        <h4 className="text-xl sm:text-2xl font-serif-title text-textMain font-normal">E-mail Preparado!</h4>
-                        <p className="text-xs sm:text-sm text-textMuted max-w-md mx-auto leading-relaxed">
-                          Seu aplicativo de e-mail foi aberto com os dados preenchidos para <strong>arqcarlafanton@gmail.com</strong>.
                         </p>
                         <div className="pt-2">
                           <button
@@ -1237,7 +1201,7 @@
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                           <div>
                             <label className="block text-[11px] sm:text-xs font-medium text-textMain uppercase tracking-widest mb-1.5">
-                              E-mail
+                              E-mail (Opcional)
                             </label>
                             <input
                               type="email"
@@ -1282,27 +1246,15 @@
                           ></textarea>
                         </div>
 
-                        <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                          {/* Main WhatsApp Button */}
+                        <div className="pt-2">
                           <button
                             type="submit"
-                            className="flex-1 py-3.5 sm:py-4 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-medium text-xs uppercase tracking-widest transition-all shadow-lg shadow-black/10 flex items-center justify-center gap-2.5 active:scale-98"
+                            className="w-full py-3.5 sm:py-4 rounded-xl bg-brand hover:bg-brand-dark text-white font-medium text-xs uppercase tracking-widest transition-all shadow-lg shadow-brand/20 flex items-center justify-center gap-2.5 active:scale-98 group"
                           >
-                            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-white" viewBox="0 0 24 24">
                               <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                             </svg>
-                            <span>Enviar via WhatsApp</span>
-                          </button>
-
-                          {/* Secondary Email Button */}
-                          <button
-                            type="button"
-                            onClick={handleSendEmail}
-                            className="py-3.5 sm:py-4 px-5 rounded-xl border border-brand/40 text-brand hover:bg-brand hover:text-white font-medium text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 active:scale-98"
-                            title="Enviar usando seu aplicativo de e-mail"
-                          >
-                            <i data-lucide="mail" className="w-4 h-4"></i>
-                            <span>Enviar por E-mail</span>
+                            <span>Enviar Solicitação via WhatsApp</span>
                           </button>
                         </div>
                       </form>
@@ -1391,7 +1343,7 @@
             href="https://api.whatsapp.com/send/?phone=5514998592955&text=Ol%C3%A1%20Carla%2C%20estou%20no%20site%20e%20gostaria%20de%20falar%20sobre%20um%20projeto%21"
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed bottom-5 right-5 z-40 p-3.5 sm:p-4 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group"
+            className="fixed bottom-5 right-5 z-40 p-3.5 sm:p-4 rounded-full bg-brand hover:bg-brand-dark text-white border-2 border-white/40 shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group"
             aria-label="Falar no WhatsApp"
             title="Fale conosco no WhatsApp"
           >
